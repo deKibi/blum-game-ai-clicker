@@ -56,18 +56,18 @@ class BlumAIClicker:
             pass
 
             # For testing purposes
-            sleep(4)
+            sleep(3)
 
             print("[DEBUG] Point on top left corner of detected object.")
             mouse.position = (star_x, star_y)
-
-            sleep(4)
+            sleep(2)
 
             print("[DEBUG] Point on the center of detected object.")
             mouse.position = (star_center_x, star_center_y)
+            sleep(2)
 
             print("[DEBUG] Delay 4 secs...")
-            sleep(4)
+            sleep(3)
 
             # mouse.position = (star_center_x, star_center_y)
             # mouse.press(Button.left)
