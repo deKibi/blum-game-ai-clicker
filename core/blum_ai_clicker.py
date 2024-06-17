@@ -34,7 +34,7 @@ class BlumAIClicker:
 
             coordinates = improc.proccess_image(ss)
 
-            coordinates = [c for c in coordinates if c["class_name"] == "fruit"]
+            coordinates = [c for c in coordinates if c["class_name"] == "star"]
 
             if len(coordinates) == 0:
                 continue
