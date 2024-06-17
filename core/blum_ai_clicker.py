@@ -30,7 +30,7 @@ class BlumAIClicker:
         improc = ImageProcessor(image_size, cfg_file_name, weights_file_name)
 
         # TODO: limit for protection
-        iterations_limit = 300
+        iterations_limit = 400
         current_iterations = 0
 
         while current_iterations < iterations_limit:
