@@ -19,7 +19,8 @@ class BlumAIClicker:
         print("Please, open Blum home page. Starting AI clicker in 4 seconds...")
         sleep(4)
 
-        window_name = "Paint - Blum test.png - Paint"
+        # test window: Paint - Blum test.png - Paint
+        window_name = "Blum1"
         cfg_file_name = "./yolov4-tiny/yolov4-tiny-custom.cfg"
         weights_file_name = "yolov4-tiny-custom_last.weights"
 
@@ -27,7 +28,13 @@ class BlumAIClicker:
         image_size = wincap.get_window_size()
         improc = ImageProcessor(image_size, cfg_file_name, weights_file_name)
 
-        while (True):
+        # TODO: limit for protection
+        iterations_limit = 250
+        current_iterations = 0
+
+        while current_iterations < iterations_limit:
+            current_iterations += 1
+
             ss = wincap.get_screenshot()
 
             if cv.waitKey(1) == ord('q'):
@@ -60,30 +67,30 @@ class BlumAIClicker:
                                                                   initial_width=image_width,
                                                                   initial_height=image_height,
                                                                   target_width=2560, target_height=1440)
-
-            pass
-
-            # For testing purposes
-            sleep(3)
-
-            print("[DEBUG] Point on top left corner of detected object.")
-            mouse.position = (star_x, star_y)
-            sleep(2)
-
-            print("[DEBUG] Point on the center of detected object.")
-            mouse.position = (star_center_x, star_center_y)
-            sleep(2)
-
             scaled_x, scaled_y = scaled_center_coordinates
+
             mouse.position = (scaled_x, scaled_y)
+            mouse.press(Button.left)
+            sleep(0.05)
+            mouse.release(Button.left)
 
-            print("[DEBUG] Delay 4 secs...")
-            sleep(3)
+            # pass
 
+            # # For testing purposes
+            # sleep(3)
+            #
+            # print("[DEBUG] Point on top left corner of detected object.")
+            # mouse.position = (star_x, star_y)
+            # sleep(2)
+            #
+            # print("[DEBUG] Point on the center of detected object.")
             # mouse.position = (star_center_x, star_center_y)
-            # mouse.press(Button.left)
-            # sleep(0.1)
-            # mouse.release(Button.left)
+            # sleep(2)
+            #
+            # mouse.position = (scaled_x, scaled_y)
+            #
+            # print("[DEBUG] Delay 4 secs...")
+            # sleep(3)
 
         print('Finished.')
 
