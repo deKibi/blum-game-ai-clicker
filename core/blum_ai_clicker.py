@@ -24,7 +24,8 @@ class BlumAIClicker:
         weights_file_name = "yolov4-tiny-custom_last.weights"
 
         wincap = WindowCapture(window_name)
-        improc = ImageProcessor(wincap.get_window_size(), cfg_file_name, weights_file_name)
+        image_size = wincap.get_window_size()
+        improc = ImageProcessor(image_size, cfg_file_name, weights_file_name)
 
         while (True):
             ss = wincap.get_screenshot()
@@ -53,6 +54,13 @@ class BlumAIClicker:
             star_center_x = star_center_coordinates['x']
             star_center_y = star_center_coordinates['y']
 
+            # Step #3: Scale coordinates to screen resolution
+            image_width, image_height = image_size
+            scaled_center_coordinates = self._convert_coordinates(x=star_center_x, y=star_center_y,
+                                                                  initial_width=image_width,
+                                                                  initial_height=image_height,
+                                                                  target_width=2560, target_height=1440)
+
             pass
 
             # For testing purposes
@@ -65,6 +73,9 @@ class BlumAIClicker:
             print("[DEBUG] Point on the center of detected object.")
             mouse.position = (star_center_x, star_center_y)
             sleep(2)
+
+            scaled_x, scaled_y = scaled_center_coordinates
+            mouse.position = (scaled_x, scaled_y)
 
             print("[DEBUG] Delay 4 secs...")
             sleep(3)
@@ -87,3 +98,26 @@ class BlumAIClicker:
         }
 
         return center_coordinates
+
+    @staticmethod
+    def _convert_coordinates(x: int, y: int, initial_width: int, initial_height: int, target_width: int, target_height: int) -> Tuple[int, int]:
+        """
+        Convert coordinates from one resolution to another.
+
+        Parameters:
+        x, y: Coordinates in the initial resolution.
+        initial_width, initial_height: Dimensions of the initial resolution.
+        target_width, target_height: Dimensions of the target resolution.
+
+        Returns:
+        (target_x, target_y): Coordinates in the target resolution.
+        """
+        # Calculate scaling factors
+        scale_x = target_width / initial_width
+        scale_y = target_height / initial_height
+
+        # Apply scaling to coordinates
+        target_x = x * scale_x
+        target_y = y * scale_y
+
+        return int(target_x), int(target_y)
