@@ -1,0 +1,4 @@
+pynput~=1.7.7
+numpy~=2.0.0
+pywin32~=306
+pillow~=10.3.0
