@@ -44,39 +44,6 @@ class BlumAIClicker:
 
             coordinates = improc.proccess_image(ss)
 
-            # coordinates = [c for c in coordinates if c["class_name"] == "star" or c["class_name"] == "freeze"]
-            #
-            # if len(coordinates) == 0:
-            #     continue
-            #
-            # detected_star = coordinates[0]
-
-            # Step #1: Get coordinates and parameters of star
-            # star_x = detected_star['x']
-            # star_y = detected_star['y']
-            # star_width = detected_star['w']
-            # star_height = detected_star['h']
-            #
-            # # Step #2: Get center coordinates of star
-            # star_center_coordinates = self._find_object_center(x=star_x, y=star_y, width=star_width, height=star_height)
-            # star_center_x = star_center_coordinates['x']
-            # star_center_y = star_center_coordinates['y']
-            #
-            # # Step #3: Scale coordinates to screen resolution
-            # image_width, image_height = image_size
-            # scaled_center_coordinates = self._convert_coordinates(x=star_center_x, y=star_center_y,
-            #                                                       initial_width=image_width,
-            #                                                       initial_height=image_height,
-            #                                                       target_width=2560, target_height=1440)
-            # scaled_x, scaled_y = scaled_center_coordinates
-            #
-            # mouse.position = (scaled_x, scaled_y)
-            # mouse.press(Button.left)
-            # sleep(0.05)
-            # mouse.release(Button.left)
-
-            # TODO !! NEW CODE - START !!
-
             # Filter objects
             stars_and_freezes = [c for c in coordinates if c["class_name"] in ["star", "freeze"]]
             bombs = [c for c in coordinates if c["class_name"] == "bomb"]
@@ -119,26 +86,6 @@ class BlumAIClicker:
                 # Click only if it's not too close to a bomb
                 if not too_close_to_bomb:
                     self.click_at(scaled_x, scaled_y)
-
-            # TODO !! NEW CODE - END !!
-
-            # pass
-
-            # # For testing purposes
-            # sleep(3)
-            #
-            # print("[DEBUG] Point on top left corner of detected object.")
-            # mouse.position = (star_x, star_y)
-            # sleep(2)
-            #
-            # print("[DEBUG] Point on the center of detected object.")
-            # mouse.position = (star_center_x, star_center_y)
-            # sleep(2)
-            #
-            # mouse.position = (scaled_x, scaled_y)
-            #
-            # print("[DEBUG] Delay 4 secs...")
-            # sleep(3)
 
         print('Finished.')
 
