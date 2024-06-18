@@ -109,7 +109,7 @@ class BlumAIClicker:
                 for bomb in bombs:
                     bomb_center_coordinates = self._find_object_center(x=bomb['x'], y=bomb['y'], width=bomb['w'],
                                                                        height=bomb['h'])
-                    if self.distance(obj_center_coordinates, bomb_center_coordinates) < max(obj_width, obj_height):
+                    if self.distance(obj_center_coordinates, bomb_center_coordinates) < (max(obj_width, obj_height) + 100):
                         too_close_to_bomb = True
                         break
 
