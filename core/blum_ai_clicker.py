@@ -67,7 +67,7 @@ class BlumAIClicker:
                     self.click_at(x=btn_center_x, y=btn_center_y)
                     print(f"Starting new game... {games_played}/{games_to_play}")
 
-                    time.sleep(1.5)
+                    time.sleep(2)
                     games_played += 1
 
                     print(f"New game started. {games_played}/{games_to_play}")
@@ -109,8 +109,20 @@ class BlumAIClicker:
                 for bomb in bombs:
                     bomb_center_coordinates = self._find_object_center(x=bomb['x'], y=bomb['y'], width=bomb['w'],
                                                                        height=bomb['h'])
-                    if self.distance(obj_center_coordinates, bomb_center_coordinates) < (max(obj_width, obj_height) + 100):
+
+                    distance_to_bomb = self.distance(obj_center_coordinates, bomb_center_coordinates)
+                    object_size = max(obj_width, obj_height)
+                    objects_multiplier_correction = 2  # how far away the bomb should be (counting in object sizes)
+                    object_size_with_correction = object_size * objects_multiplier_correction
+
+                    if distance_to_bomb < object_size_with_correction:
                         too_close_to_bomb = True
+                        print(
+                            f"[DEBUG] Too close to bomb! Distance to bomb: {distance_to_bomb}, "
+                            f"object size: {object_size} ({obj_width}, {obj_height}), "
+                            f"correction coefficient: {objects_multiplier_correction}, "
+                            f"object size with correction: {object_size_with_correction}"
+                        )
                         break
 
                 # Click only if it's not too close to a bomb
