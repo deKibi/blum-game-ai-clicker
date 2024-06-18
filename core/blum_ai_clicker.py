@@ -112,7 +112,7 @@ class BlumAIClicker:
 
                     distance_to_bomb = self.distance(obj_center_coordinates, bomb_center_coordinates)
                     object_size = max(obj_width, obj_height)
-                    objects_multiplier_correction = 2  # how far away the bomb should be (counting in object sizes)
+                    objects_multiplier_correction = 1.5  # how far away the bomb should be (counting in object sizes)
                     object_size_with_correction = object_size * objects_multiplier_correction
 
                     if distance_to_bomb < object_size_with_correction:
