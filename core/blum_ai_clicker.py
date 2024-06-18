@@ -6,45 +6,69 @@ from time import sleep
 # Third-party Libraries
 from pynput.mouse import Button, Controller
 import cv2 as cv
+import keyboard
 
 # Custom Modules
 from core.window_capture import WindowCapture
 from core.image_processor import ImageProcessor
-
+from utils import console_utils
 
 mouse = Controller()
 
 
 class BlumAIClicker:
     def start(self):
-        print("Please, open Blum home page. Starting AI clicker in 4 seconds...")
-        sleep(4)
-
-        # test window: Paint - Blum test.png - Paint
         window_name = "Blum1"
         cfg_file_name = "./yolov4-tiny/yolov4-tiny-custom.cfg"
         weights_file_name = "yolov4-tiny-custom_last.weights"
 
+        # Create necessary class objects
         wincap = WindowCapture(window_name)
         image_size = wincap.get_window_size()
         improc = ImageProcessor(image_size, cfg_file_name, weights_file_name)
 
-        # TODO: limit for protection
-        iterations_limit = 400
-        current_iterations = 0
+        # Set target games count
+        games_to_play = console_utils.ask_how_much_games_to_play()
+        games_played = 0
 
-        while current_iterations < iterations_limit:
-            current_iterations += 1
+        print(f"Games goal for this session is set to {games_to_play} games.")
+        print("Please, open Blum home page and focus on it. Starting AI clicker in 5 seconds...")
+        sleep(5)
 
+        while games_played < games_to_play:
+            print(f"New game started! ({games_played}/{games_to_play})")
+
+            # Step #1.1: Start game window capture
             ss = wincap.get_screenshot()
 
-            if cv.waitKey(1) == ord('q'):
-                cv.destroyAllWindows()
+            # Step #1.2: Quick game if needed
+            if keyboard.is_pressed('q'):
+                print("You exited the script!")
                 break
 
+            # Step #1.3: Get all detected objects with their coordinates
             coordinates = improc.proccess_image(ss)
 
-            # Filter objects
+            # Step #2.1: Get play button
+            play_buttons = [c for c in coordinates if c["class_name"] in ["play_btn", "play_again_btn"]]
+            if len(play_buttons) > 0:
+                # Step #1: Get play button coordinates and size
+                play_btn = play_buttons[0]
+                play_btn_x = play_btn['x']
+                play_btn_y = play_btn['y']
+                btn_w = play_btn['w']
+                btn_h = play_btn['h']
+
+                # Step #2: Locate x, y for btn
+                btn_center_coordinates = self._find_object_center(x=play_btn_x, y=play_btn_y, width=btn_w, height=btn_h)
+                btn_center_x = btn_center_coordinates['x']
+                btn_center_y = btn_center_coordinates['y']
+
+                # Step #3: Press play btn and increase played games counter
+                self.click_at(x=btn_center_x, y=btn_center_y)
+                games_played += 1
+
+            # Step #2.2: Filter in-game objects
             stars_and_freezes = [c for c in coordinates if c["class_name"] in ["star", "freeze"]]
             bombs = [c for c in coordinates if c["class_name"] == "bomb"]
 
@@ -69,16 +93,16 @@ class BlumAIClicker:
                 # Step #3: Scale coordinates to screen resolution
                 image_width, image_height = image_size
                 scaled_center_coordinates = self._convert_coordinates(x=obj_center_x, y=obj_center_y,
-                                                                initial_width=image_width,
-                                                                initial_height=image_height,
-                                                                target_width=2560, target_height=1440)
+                                                                      initial_width=image_width,
+                                                                      initial_height=image_height,
+                                                                      target_width=2560, target_height=1440)
                 scaled_x, scaled_y = scaled_center_coordinates
 
                 # Check if the detected object is near a bomb
                 too_close_to_bomb = False
                 for bomb in bombs:
                     bomb_center_coordinates = self._find_object_center(x=bomb['x'], y=bomb['y'], width=bomb['w'],
-                                                                 height=bomb['h'])
+                                                                       height=bomb['h'])
                     if self.distance(obj_center_coordinates, bomb_center_coordinates) < max(obj_width, obj_height):
                         too_close_to_bomb = True
                         break
@@ -102,7 +126,8 @@ class BlumAIClicker:
         return center_coordinates
 
     @staticmethod
-    def _convert_coordinates(x: int, y: int, initial_width: int, initial_height: int, target_width: int, target_height: int) -> Tuple[int, int]:
+    def _convert_coordinates(x: int, y: int, initial_width: int, initial_height: int, target_width: int,
+                             target_height: int) -> Tuple[int, int]:
         """
         Convert coordinates from one resolution to another.
 
