@@ -1,11 +1,11 @@
 # Standard Libraries
-from typing import Tuple, Dict
+import time
+from typing import Tuple
 from math import sqrt
 from time import sleep
 
 # Third-party Libraries
 from pynput.mouse import Button, Controller
-import cv2 as cv
 import keyboard
 
 # Custom Modules
@@ -35,9 +35,7 @@ class BlumAIClicker:
         print("Please, open Blum home page and focus on it. Starting AI clicker in 5 seconds...")
         sleep(5)
 
-        while games_played < games_to_play:
-            print(f"New game started! ({games_played}/{games_to_play})")
-
+        while True:
             # Step #1.1: Start game window capture
             ss = wincap.get_screenshot()
 
@@ -65,8 +63,16 @@ class BlumAIClicker:
                 btn_center_y = btn_center_coordinates['y']
 
                 # Step #3: Press play btn and increase played games counter
-                self.click_at(x=btn_center_x, y=btn_center_y)
-                games_played += 1
+                if games_played < games_to_play:
+                    self.click_at(x=btn_center_x, y=btn_center_y)
+                    print(f"Starting new game... {games_played}/{games_to_play}")
+
+                    time.sleep(1.5)
+                    games_played += 1
+
+                    print(f"New game started. {games_played}/{games_to_play}")
+                else:
+                    break
 
             # Step #2.2: Filter in-game objects
             stars_and_freezes = [c for c in coordinates if c["class_name"] in ["star", "freeze"]]
@@ -160,5 +166,5 @@ class BlumAIClicker:
         """Move the mouse to the specified coordinates and click."""
         mouse.position = (x, y)
         mouse.press(Button.left)
-        sleep(0.05)
+        # sleep(0.01)
         mouse.release(Button.left)
