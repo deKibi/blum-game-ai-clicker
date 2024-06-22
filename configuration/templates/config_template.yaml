@@ -1,0 +1,19 @@
+# General Settings
+SETTINGS:
+  # Specify your screen resolution to ensure precise coordinate conversion from the Telegram window to your screen.
+  # Example for a 2k monitor: WIDTH 2560, HEIGHT 1440
+  # Example for an HD monitor: WIDTH 1920, HEIGHT 1080
+  # Enter only numbers, without adding pixels or any other symbols.
+  SCREEN_RESOLUTION:
+    WIDTH: 2560
+    HEIGHT: 1440
+
+# In-game Settings
+GAME_SETTINGS:
+  # The clicker includes a system to avoid clicking on a bomb if it is too close to a star.
+  # Due to the delay between object appearance and detection, a bomb might occasionally be clicked by mistake.
+  # To mitigate this, a coefficient is used to extend the safe distance between bombs and stars.
+  # The value represents the multiplier for the distance, measured in star widths.
+  # For example, a value of 1.5 means a star will not be clicked if a bomb is closer than 1.5 star widths.
+  # Recommended value: 1.5-2. Adjust according to your system's performance and results.
+  STARS_FROM_BOMB: 1.5
