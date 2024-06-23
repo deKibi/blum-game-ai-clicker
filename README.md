@@ -7,7 +7,7 @@ Script intended to help with large numbers of games, it is not effective to run 
 - Supported OS: Windows
 
 Required:
-- Python 3.10+ https://www.python.org/downloads/
+- Python 3.10+ https://www.python.org/downloads/ (when installing, **add Python to the system path**, first installer window, checkbox **Add Python to PATH**)
 - BlueStacks https://www.bluestacks.com/download.html
 - Git https://git-scm.com/downloads
 
@@ -25,7 +25,7 @@ Required:
     ```
 
 3. Install project dependencies (run in venv) -
-    `pip install -r requirements`
+    `pip install -r requirements.txt`
 
 4. Download and install BlueStacks - https://www.bluestacks.com/download.html
 
