@@ -3,7 +3,7 @@ from loguru import logger
 
 # Custom Modules
 from utils import file_utils
-from configuration.constants import DIR_FILES_PATH
+from configuration.constants import DIR_FILES_PATH, CONFIG_PATH, CONFIG_TEMPLATE_PATH
 
 
 def init_project_directories() -> None:
@@ -17,5 +17,6 @@ def init_project_directories() -> None:
 def init_project_files() -> None:
     logger.info("Initializing project files, it may take a while...")
 
+    file_utils.create_file_from_template(destination_file_path=CONFIG_PATH, file_template_path=CONFIG_TEMPLATE_PATH)
 
-
+    logger.success("Project structure initialized.")

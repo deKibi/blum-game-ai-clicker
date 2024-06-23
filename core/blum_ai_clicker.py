@@ -17,13 +17,13 @@ mouse = Controller()
 
 
 class BlumAIClicker:
-    def start(self):
-        window_name = "Blum1"
+    def start(self) -> None:
+        telegram_window_name = "Blum1"
         cfg_file_name = "./yolov4-tiny/yolov4-tiny-custom.cfg"
         weights_file_name = "yolov4-tiny-custom_last.weights"
 
         # Create necessary class objects
-        wincap = WindowCapture(window_name)
+        wincap = WindowCapture(telegram_window_name)
         image_size = wincap.get_window_size()
         improc = ImageProcessor(image_size, cfg_file_name, weights_file_name)
 
