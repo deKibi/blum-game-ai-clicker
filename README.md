@@ -3,6 +3,9 @@ Clicker to auto-collect stars in game and farm $BLUM automatically. Object detec
 Script intended to help with large numbers of games, it is not effective to run it for 2–3 games, that's why I advise you to accumulate 50+ tickets and then run the script.
 
 # Getting started / Prerequisites
+- Supported OS: Windows 
+- Python 3.10+ required
+
 **Please read the instruction below completely before running the script.**
 
 1. Clone the repository to your machine
