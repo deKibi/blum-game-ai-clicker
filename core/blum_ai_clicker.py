@@ -25,13 +25,13 @@ class BlumAIClicker:
         project_config = ProjectConfig()
 
         telegram_window_name = project_config.get_telegram_window_name()
-        cfg_file_name = YOLO_CONFIG_PATH
-        weights_file_path = BLUM_WEIGHTS_PATH
+        yolo_cfg_file_path = "./yolov4-tiny/yolov4-tiny-custom.cfg"
+        yolo_weights_file_path = "core/yolov4-tiny-custom_last.weights"
 
         # Create necessary class objects
         window_capture = WindowCapture(telegram_window_name)
         image_size = window_capture.get_window_size()
-        improc = ImageProcessor(image_size, cfg_file_name, weights_file_path)
+        improc = ImageProcessor(image_size, yolo_cfg_file_path, yolo_weights_file_path)
 
         # Set target games count
         games_to_play = console_utils.ask_how_much_games_to_play()

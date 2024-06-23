@@ -12,27 +12,24 @@ from core.objects.screen_resolution import ScreenResolution
 
 
 class ProjectConfig:
-    _CONFIG_DATA: Optional[dict] = None
+    def __init__(self):
+        self._config_data = self.load_config()
 
-    def load_config(self) -> None:
-        if self._CONFIG_DATA is None:
-            loaded_config_data = self._load_config_yaml()
-            self._CONFIG_DATA = loaded_config_data
-            logger.success("Project config data loaded.")
-        else:
-            logger.debug("Config already loaded, no actions taken.")
+    def load_config(self) -> dict:
+        loaded_config_data = self._load_config_yaml()
+        return loaded_config_data
 
     def get_host_screen_resolution(self) -> ScreenResolution:
-        screen_resolution_str: str = self._CONFIG_DATA["SETTINGS"]["HOST_SCREEN_RESOLUTION"]
+        screen_resolution_str: str = self._config_data["SETTINGS"]["HOST_SCREEN_RESOLUTION"]
         width, height = map(int, screen_resolution_str.split('x'))
         return ScreenResolution(width, height)
 
     def get_telegram_window_name(self) -> str:
-        window_name: str = self._CONFIG_DATA["BLUM_SETTINGS"]["TELEGRAM_WINDOW_NAME"]
+        window_name: str = self._config_data["BLUM_SETTINGS"]["TELEGRAM_WINDOW_NAME"]
         return window_name
 
     def get_stars_from_bomb(self) -> float:
-        stars_from_bomb: float = self._CONFIG_DATA["BLUM_SETTINGS"]["STARS_FROM_BOMB"]
+        stars_from_bomb: float = self._config_data["BLUM_SETTINGS"]["STARS_FROM_BOMB"]
         return stars_from_bomb
 
     @staticmethod
