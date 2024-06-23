@@ -22,7 +22,7 @@ Script intended to help with large numbers of games, it is not effective to run 
     ```
 
 3. Install project dependencies (run in venv) -
-    `python pip install -r requirements`
+    `pip install -r requirements`
 
 4. Download and install BlueStacks - https://www.bluestacks.com/download.html
 
