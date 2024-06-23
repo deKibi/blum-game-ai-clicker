@@ -5,6 +5,7 @@ import shutil
 
 # Third-party Libraries
 from loguru import logger
+import yaml
 
 
 def create_directory_if_not_exist(directory_path: str) -> None:
@@ -39,4 +40,24 @@ def copy_file(source_path: str, destination_path: str) -> None:
         shutil.copy2(source_path, destination_path)
         logger.debug(f"File copied from {source_path} to {destination_path}")
     except FileNotFoundError:
-        raise CopyFileError(f"Could not make a copy to {destination_path}, there is no source file at {source_path}.")
+        logger.error(f"Could not make a copy to {destination_path}, there is no source file at {source_path}.")
+        raise
+
+
+def load_yaml(file_path: str) -> Optional[dict]:
+    """
+    Load YAML file.
+
+    :param file_path: The path to the YAML file.
+    :return: The contents of the YAML file or None if file was not found/an error occurred.
+    """
+    try:
+        with open(file_path, 'r') as file:
+            content = yaml.safe_load(file)
+            return content
+    except FileNotFoundError:
+        logger.error(f"File {file_path} does not exist.")
+        return None
+    except Exception as e:
+        logger.error(f"Could not parse YAML content from {file_path} due to unexpected error: {e}.")
+        return None
