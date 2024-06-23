@@ -21,12 +21,9 @@ def create_directory_if_not_exist(directory_path: str) -> None:
         logger.debug(f"Directory '{directory_path}' already exists. No changes made.")
 
 
-def create_file_from_template(destination_file_path: str, file_template_path: str) -> None:
+def create_file_from_template_if_not_exist(destination_file_path: str, file_template_path: str) -> None:
     if not os.path.exists(destination_file_path):
         copy_file(source_path=file_template_path, destination_path=destination_file_path)
-        logger.info(f"File at {destination_file_path} created using template at {file_template_path}.")
-    else:
-        logger.debug(f"File at {destination_file_path} already exists. No changes made.")
 
 
 def copy_file(source_path: str, destination_path: str) -> None:
@@ -38,7 +35,6 @@ def copy_file(source_path: str, destination_path: str) -> None:
     """
     try:
         shutil.copy2(source_path, destination_path)
-        logger.debug(f"File copied from {source_path} to {destination_path}")
     except FileNotFoundError:
         logger.error(f"Could not make a copy to {destination_path}, there is no source file at {source_path}.")
         raise

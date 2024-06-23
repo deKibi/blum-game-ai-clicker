@@ -59,4 +59,5 @@ Thumbs.db
 *.weights
 
 # Project Files
+files
 dev_temp

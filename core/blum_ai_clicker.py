@@ -9,16 +9,18 @@ from pynput.mouse import Button, Controller
 import keyboard
 
 # Custom Modules
+from configuration.project_config import ProjectConfig
 from core.window_capture import WindowCapture
 from core.image_processor import ImageProcessor
 from utils import console_utils
 
+project_config = ProjectConfig()
 mouse = Controller()
 
 
 class BlumAIClicker:
     def start(self) -> None:
-        telegram_window_name = "Blum1"
+        telegram_window_name = project_config.get_telegram_window_name()
         cfg_file_name = "./yolov4-tiny/yolov4-tiny-custom.cfg"
         weights_file_name = "yolov4-tiny-custom_last.weights"
 
