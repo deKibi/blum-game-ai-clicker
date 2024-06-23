@@ -1,5 +1,5 @@
 # Standard Libraries
-from typing import Optional
+from typing import Optional, List
 import os
 import shutil
 
@@ -57,3 +57,24 @@ def load_yaml(file_path: str) -> Optional[dict]:
     except Exception as e:
         logger.error(f"Could not parse YAML content from {file_path} due to unexpected error: {e}.")
         return None
+
+
+def scan_folder_for_files(directory_path: str, extension: str) -> List[str]:
+    """
+    Scans a directory for files with the given extension.
+
+    :param directory_path: The path to the directory to be scanned.
+    :param extension: The extension of the files to search for in the directory.
+    :return: List of matching files by extension.
+    """
+    # List all files in the log directory
+    all_files = os.listdir(directory_path)
+
+    # Filter files with a ".log" extension
+    target_files = []
+
+    for file in all_files:
+        if file.endswith(extension):
+            target_files.append(file)
+
+    return target_files

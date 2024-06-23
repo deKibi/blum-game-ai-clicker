@@ -5,6 +5,7 @@ from math import sqrt
 from time import sleep
 
 # Third-party Libraries
+from loguru import logger
 from pynput.mouse import Button, Controller
 import keyboard
 
@@ -33,8 +34,8 @@ class BlumAIClicker:
         games_to_play = console_utils.ask_how_much_games_to_play()
         games_played = 0
 
-        print(f"Games goal for this session is set to {games_to_play} games.")
-        print("Please, open Blum home page and focus on it. Starting AI clicker in 5 seconds...")
+        logger.info(f"Games goal for this session is set to {games_to_play} games.")
+        logger.info("Please, open Blum home page and focus on it. Starting AI clicker in 5 seconds...")
         sleep(5)
 
         while True:
@@ -67,12 +68,12 @@ class BlumAIClicker:
                 # Step #3: Press play btn and increase played games counter
                 if games_played < games_to_play:
                     self.click_at(x=btn_center_x, y=btn_center_y)
-                    print(f"Starting new game... {games_played}/{games_to_play}")
+                    logger.info(f"Starting new game... {games_played}/{games_to_play}")
 
                     time.sleep(2)
                     games_played += 1
 
-                    print(f"New game started. {games_played}/{games_to_play}")
+                    logger.info(f"New game started. {games_played}/{games_to_play}")
                 else:
                     break
 
@@ -119,8 +120,8 @@ class BlumAIClicker:
 
                     if distance_to_bomb < object_size_with_correction:
                         too_close_to_bomb = True
-                        print(
-                            f"[DEBUG] Too close to bomb! Distance to bomb: {distance_to_bomb}, "
+                        logger.debug(
+                            f"Too close to bomb! Distance to bomb: {distance_to_bomb}, "
                             f"object size: {object_size} ({obj_width}, {obj_height}), "
                             f"correction coefficient: {objects_multiplier_correction}, "
                             f"object size with correction: {object_size_with_correction}"
@@ -131,7 +132,7 @@ class BlumAIClicker:
                 if not too_close_to_bomb:
                     self.click_at(scaled_x, scaled_y)
 
-        print('Finished.')
+        logger.success('Finished playing Blum game.')
 
     @staticmethod
     def _find_object_center(x: int, y: int, width: int, height: int) -> dict:
