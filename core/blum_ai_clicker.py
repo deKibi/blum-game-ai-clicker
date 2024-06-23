@@ -43,7 +43,7 @@ class BlumAIClicker:
 
             # Step #1.2: Quick game if needed
             if keyboard.is_pressed('q'):
-                print("You exited the script!")
+                logger.warning("You manually exited the game by pressing q!")
                 break
 
             # Step #1.3: Get all detected objects with their coordinates
