@@ -2,6 +2,6 @@ loguru~=0.7.2
 PyYAML~=6.0.1
 pynput~=1.7.7
 numpy~=1.26.4
-pywin32~=306
 pillow~=10.3.0
 keyboard~=0.13.5
+pywin32
