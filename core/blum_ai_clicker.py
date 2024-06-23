@@ -11,7 +11,7 @@ import keyboard
 
 # Custom Modules
 from configuration.project_config import ProjectConfig
-from configuration.constants import YOLO_CONFIG_PATH, BLUM_WEIGHTS_PATH
+from configuration.constants import YOLO_CONFIG_PATH, YOLO_WEIGHTS_PATH
 from core.window_capture import WindowCapture
 from core.image_processor import ImageProcessor
 from utils import console_utils
@@ -21,17 +21,13 @@ mouse = Controller()
 
 class BlumAIClicker:
     def start(self) -> None:
-        # Create necessary class objects
         project_config = ProjectConfig()
-
         telegram_window_name = project_config.get_telegram_window_name()
-        yolo_cfg_file_path = "./yolov4-tiny/yolov4-tiny-custom.cfg"
-        yolo_weights_file_path = "core/yolov4-tiny-custom_last.weights"
 
         # Create necessary class objects
         window_capture = WindowCapture(telegram_window_name)
         image_size = window_capture.get_window_size()
-        improc = ImageProcessor(image_size, yolo_cfg_file_path, yolo_weights_file_path)
+        improc = ImageProcessor(image_size, YOLO_CONFIG_PATH, YOLO_WEIGHTS_PATH)
 
         # Set target games count
         games_to_play = console_utils.ask_how_much_games_to_play()
@@ -189,5 +185,5 @@ class BlumAIClicker:
         """Move the mouse to the specified coordinates and click."""
         mouse.position = (x, y)
         mouse.press(Button.left)
-        # sleep(0.01)
+        # sleep(0.05)
         mouse.release(Button.left)
