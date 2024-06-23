@@ -11,7 +11,7 @@ import keyboard
 
 # Custom Modules
 from configuration.project_config import ProjectConfig
-from configuration.constants import YOLO_CONFIG_PATH, YOLO_WEIGHTS_PATH
+from configuration.constants import PROJECT_VERSION, YOLO_CONFIG_PATH, YOLO_WEIGHTS_PATH
 from core.window_capture import WindowCapture
 from core.image_processor import ImageProcessor
 from utils import console_utils
@@ -21,6 +21,8 @@ mouse = Controller()
 
 class BlumAIClicker:
     def start(self) -> None:
+        logger.info(f"Starting Blum AI clicker, v{PROJECT_VERSION}")
+
         project_config = ProjectConfig()
         telegram_window_name = project_config.get_telegram_window_name()
 
