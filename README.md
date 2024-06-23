@@ -4,9 +4,12 @@ Clicker to auto-collect stars in game and farm $BLUM automatically. Blum AI clic
 Script intended to help with large numbers of games, it is not effective to run it for 2–3 games, that's why I advise you to accumulate 50+ tickets and then run the script.
 
 # Getting started / Prerequisites 
-- Supported OS: Windows 
-- Python 3.10+ required
-- Git required
+- Supported OS: Windows
+
+Required:
+- Python 3.10+ https://www.python.org/downloads/
+- BlueStacks https://www.bluestacks.com/download.html
+- Git https://git-scm.com/downloads
 
 **Please read the instruction below completely before running the script.**
 
@@ -34,3 +37,7 @@ Script intended to help with large numbers of games, it is not effective to run 
 10. Project config should be generated in `files/config.yaml`. Open config (for example, with Notepad++) and edit screen resolution and window name according to your host. 
 11. Wait a few seconds, and you will be prompted to enter how many games should be played. Be careful and do not enter more games than your account have, there is no system to detect that you are out of tickets.
 12. Now Blum AI clicker will play as many games as you entered and than will be stopped. If you need to stop the script during the game, hold down the English key **q** for a few seconds.
+
+## Liked the script? Support author
+- MetaMask `0x79002fD8bA43a5BFd26CD237BaC0a3677fcA9e55`
+- Phantom (Solana) `Fskayrpu1BQhPz333F6Q8WfQL3Kt2kWEv4U5y82gm5Hh`
