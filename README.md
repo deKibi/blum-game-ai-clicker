@@ -36,7 +36,7 @@ Required:
 9. Launch the script from project root with `python main.py` or `python3 main.py`. Launch and stop the script (it can crash itself, it's okay).
 10. Project config should be generated in `files/config.yaml`. Open config (for example, with Notepad++) and edit screen resolution and window name according to your host. 
 11. Wait a few seconds, and you will be prompted to enter how many games should be played. Be careful and do not enter more games than your account have, there is no system to detect that you are out of tickets.
-12. Now Blum AI clicker will play as many games as you entered and than will be stopped. If you need to stop the script during the game, hold down the English key **q** for a few seconds.
+12. Now Blum AI clicker will play as many games as you entered and then will be stopped. If you need to stop the script during the game, hold down the English key **q** for a few seconds.
 
 ## Liked the script? Support author
 - MetaMask `0x79002fD8bA43a5BFd26CD237BaC0a3677fcA9e55`
