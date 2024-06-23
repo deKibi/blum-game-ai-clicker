@@ -53,11 +53,13 @@ Thumbs.db
 *.tfvars
 *.tfstate*
 
+# Project Files
+files
+logs
+
 # AI / Models
 /yolov4-tiny/obj.zip
 /bkp/
-*.weights
 
-# Project Files
-files
+# Custom Folders / Files
 dev_temp

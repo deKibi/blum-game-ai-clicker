@@ -1,10 +1,10 @@
 class ScreenResolution(object):
     def __init__(self, width: int, height: int):
-        self.width = width
-        self.height = height
+        self._width = width
+        self._height = height
 
     def get_width(self) -> int:
-        return self.width
+        return self._width
 
     def get_height(self) -> int:
-        return self.height
+        return self._height

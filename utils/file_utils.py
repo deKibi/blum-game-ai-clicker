@@ -17,8 +17,6 @@ def create_directory_if_not_exist(directory_path: str) -> None:
     if not os.path.exists(directory_path):
         os.makedirs(directory_path)
         logger.debug(f"Directory '{directory_path}' has been created.")
-    else:
-        logger.debug(f"Directory '{directory_path}' already exists. No changes made.")
 
 
 def create_file_from_template_if_not_exist(destination_file_path: str, file_template_path: str) -> None:

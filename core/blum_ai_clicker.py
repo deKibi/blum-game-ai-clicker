@@ -11,24 +11,27 @@ import keyboard
 
 # Custom Modules
 from configuration.project_config import ProjectConfig
+from configuration.constants import YOLO_CONFIG_PATH, BLUM_WEIGHTS_PATH
 from core.window_capture import WindowCapture
 from core.image_processor import ImageProcessor
 from utils import console_utils
 
-project_config = ProjectConfig()
 mouse = Controller()
 
 
 class BlumAIClicker:
     def start(self) -> None:
+        # Create necessary class objects
+        project_config = ProjectConfig()
+
         telegram_window_name = project_config.get_telegram_window_name()
-        cfg_file_name = "./yolov4-tiny/yolov4-tiny-custom.cfg"
-        weights_file_name = "yolov4-tiny-custom_last.weights"
+        cfg_file_name = YOLO_CONFIG_PATH
+        weights_file_path = BLUM_WEIGHTS_PATH
 
         # Create necessary class objects
-        wincap = WindowCapture(telegram_window_name)
-        image_size = wincap.get_window_size()
-        improc = ImageProcessor(image_size, cfg_file_name, weights_file_name)
+        window_capture = WindowCapture(telegram_window_name)
+        image_size = window_capture.get_window_size()
+        improc = ImageProcessor(image_size, cfg_file_name, weights_file_path)
 
         # Set target games count
         games_to_play = console_utils.ask_how_much_games_to_play()
@@ -40,7 +43,7 @@ class BlumAIClicker:
 
         while True:
             # Step #1.1: Start game window capture
-            ss = wincap.get_screenshot()
+            ss = window_capture.get_screenshot()
 
             # Step #1.2: Quick game if needed
             if keyboard.is_pressed('q'):
@@ -101,10 +104,14 @@ class BlumAIClicker:
 
                 # Step #3: Scale coordinates to screen resolution
                 image_width, image_height = image_size
+                host_screen_resolution = project_config.get_host_screen_resolution()
+                host_screen_width = host_screen_resolution.get_width()
+                host_screen_height = host_screen_resolution.get_height()
                 scaled_center_coordinates = self._convert_coordinates(x=obj_center_x, y=obj_center_y,
                                                                       initial_width=image_width,
                                                                       initial_height=image_height,
-                                                                      target_width=2560, target_height=1440)
+                                                                      target_width=host_screen_width,
+                                                                      target_height=host_screen_height)
                 scaled_x, scaled_y = scaled_center_coordinates
 
                 # Check if the detected object is near a bomb
@@ -115,7 +122,8 @@ class BlumAIClicker:
 
                     distance_to_bomb = self.distance(obj_center_coordinates, bomb_center_coordinates)
                     object_size = max(obj_width, obj_height)
-                    objects_multiplier_correction = 1.5  # how far away the bomb should be (counting in object sizes)
+                    # How far away the bomb should be (counting in object sizes)
+                    objects_multiplier_correction = project_config.get_stars_from_bomb()
                     object_size_with_correction = object_size * objects_multiplier_correction
 
                     if distance_to_bomb < object_size_with_correction:
