@@ -8,15 +8,15 @@ Script intended to help with large numbers of games, it is not effective to run 
 
 **Please read the instruction below completely before running the script.**
 
-1. Clone the repository to your machine
+1. Clone the repository to your machine (git should be installed on your machine)
     ```shell
     git clone https://github.com/dKibi/blum-game-ai-clicker.git
     ```
 
-2. Create a virtual environment and activate it
+2. Create a virtual environment and activate it (for Windows)
     ```shell
-    python3 -m venv venv
-    source venv/bin/activate
+    python -m venv venv
+    venv\Scripts\activate
     ```
 
 3. Install project dependencies (run in venv) -
