@@ -25,7 +25,10 @@ def main():
         logger.exception(f"Failed due to unexpected error: {e}", e)
         sys.exit(1)
     else:
-        logger.success("Blum AI clicker finished without any critical errors.")
+        logger.success(
+            "Blum AI clicker finished without any critical errors. Thanks for using soft developed "
+            "by CRYPTO C0D3R (TG https://t.me/cryptocodi)"
+        )
 
 
 if __name__ == '__main__':
