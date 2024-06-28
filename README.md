@@ -61,3 +61,4 @@ Required:
 
 ## Disclaimer
 The script was written for educational purposes and has never been used on my accounts to earn money or violate rules.
+Use the software at your own risk.
