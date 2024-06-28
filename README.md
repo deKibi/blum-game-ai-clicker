@@ -38,7 +38,7 @@ Required:
 3. Install project dependencies (run in venv) -
     `pip install -r requirements.txt`
 
-4. Download and install BlueStacks - https://www.bluestacks.com/download.html
+4. Download and install BlueStacks — https://www.bluestacks.com/download.html
 
 5. Launch BlueStacks Multi Instance Manager and create a profile with the name you can identify an account (for example, Blum1).
 6. Launch created instance and make sure you have horizontal orientation. 
@@ -49,6 +49,10 @@ Required:
 11. Wait a few seconds, and you will be prompted to enter how many games should be played. Be careful and do not enter more games than your account have, there is no system to detect that you are out of tickets.
 12. Now Blum AI clicker will play as many games as you entered and then will be stopped. If you need to stop the script during the game, hold down the English key **q** for a few seconds.
 
-## Liked the script? Support author
-- MetaMask `0x79002fD8bA43a5BFd26CD237BaC0a3677fcA9e55`
+## Donate
+- MetaMask (any evm) `0x79002fD8bA43a5BFd26CD237BaC0a3677fcA9e55`
 - Phantom (Solana) `Fskayrpu1BQhPz333F6Q8WfQL3Kt2kWEv4U5y82gm5Hh`
+
+## Credits
+- Thanks [@moises-dias](https://github.com/moises-dias) for Yolo object detection tutorial
+- Thanks [@front-endb](https://github.com/front-endb) for help with testing
