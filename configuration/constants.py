@@ -1,6 +1,6 @@
 # configuration/constants.py
 
-PROJECT_VERSION = "1.0.0"  # DO NOT CHANGE
+PROJECT_VERSION = "0.4.1"  # DO NOT CHANGE
 
 # Project Folders
 FILES_DIR_PATH = "files"
