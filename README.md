@@ -1,11 +1,22 @@
-## Blum Game AI Clicker
+# Blum Game AI Clicker
 Clicker to auto-collect stars in game and farm $BLUM automatically. Blum AI clicker works on object detection (stars, bombs, freeze), it means that there is no any interaction with Blum code or API itself.
 
 Script intended to help with large numbers of games, it is not effective to run it for 2–3 games, that's why I advise you to accumulate 50+ tickets and then run the script.
 
-# Getting started / Prerequisites 
-- Supported OS: Windows
+## Features
+- Works on AI (computer vision) — interacting only with image, there is no interaction with the BLUM code/API
+- Auto-collecting stars (with the currently trained model the productivity is about 140 points per game)
+- Auto-avoiding in-game bombs (with the ability to configure safe distance in the config)
+- Prioritization of freezes (if a freeze is detected, it will be pressed first)
+- Ability to run on different screen resolutions (screen resolution is specified in the config)
 
+## System requirements
+- OS: Windows
+- CPU: 6+ cores with recommended minimum frequency 3 GHz
+- RAM: 8+ GB
+- GPU: at least 1 GB GPU memory (not tested on VMs yet)
+
+## Installation
 Required:
 - Python 3.10+ https://www.python.org/downloads/ (when installing, **add Python to the system path**, first installer window, checkbox **Add Python to PATH**)
 - BlueStacks https://www.bluestacks.com/download.html
