@@ -1,4 +1,7 @@
 # Blum Game AI Clicker
+
+![Blum AI clicker - bg small - git repo](https://github.com/deKibi/blum-game-ai-clicker/assets/112882532/9db5a607-b468-4337-8823-8be8c9ada7d2)
+
 ### https://t.me/cryptocodi/12
 
 Clicker to auto-collect stars in game and farm $BLUM automatically. Blum AI clicker works on object detection (stars, bombs, freeze), it means that there is no any interaction with Blum code or API itself.
