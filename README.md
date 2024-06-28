@@ -55,4 +55,4 @@ Required:
 
 ## Credits
 - Thanks [@moises-dias](https://github.com/moises-dias) for Yolo object detection tutorial
-- Thanks [@front-endb](https://github.com/front-endb) for help with testing
+- Thanks [@hokageR1s](https://t.me/hokageR1s) for help with testing
