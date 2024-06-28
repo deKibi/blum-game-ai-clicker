@@ -56,3 +56,6 @@ Required:
 ## Credits
 - Thanks [@moises-dias](https://github.com/moises-dias) for Yolo object detection tutorial
 - Thanks [@hokageR1s](https://t.me/hokageR1s) for help with testing
+
+## Disclaimer
+The script was written for educational purposes and has never been used on my accounts to earn money or violate rules.
