@@ -172,7 +172,7 @@ class BlumAIClicker:
 
     @staticmethod
     def _convert_coordinates(x: int, y: int, initial_width: int, initial_height: int, target_width: int,
-                             target_height: int) -> Tuple[int, int]:
+                             target_height: int, scaling_factor=1.0) -> Tuple[int, int]:
         """
         Convert coordinates from one resolution to another.
 
@@ -180,13 +180,21 @@ class BlumAIClicker:
         x, y: Coordinates in the initial resolution.
         initial_width, initial_height: Dimensions of the initial resolution.
         target_width, target_height: Dimensions of the target resolution.
+        scaling_factor: Windows scaling factor (e.g., 1.0 for 100%, 1.25 for 125%).
 
         Returns:
         (target_x, target_y): Coordinates in the target resolution.
         """
+        # TODO !! DEBUG, REMOVE BEFORE PROD !!
+        scaling_factor = 1.25  # 125% scaling
+
+        # Calculate effective target dimensions considering the scaling factor
+        effective_target_width = target_width / scaling_factor
+        effective_target_height = target_height / scaling_factor
+
         # Calculate scaling factors
-        scale_x = target_width / initial_width
-        scale_y = target_height / initial_height
+        scale_x = effective_target_width / initial_width
+        scale_y = effective_target_height / initial_height
 
         # Apply scaling to coordinates
         target_x = x * scale_x
