@@ -77,17 +77,12 @@ class BlumAIClicker:
                 play_btn_center_y = btn_center_coordinates['y']
 
                 # Step #2.2: Press play btn and increase played games counter
+                # temporary solution which will be buggy for a small number of games
                 if games_played < games_to_play:
                     logger.info(f"Starting new game... {games_played}/{games_to_play}")
 
-                    play_x_scaled, play_y_scaled = self._convert_coordinates(x=play_btn_center_x, y=play_btn_center_y,
-                                                                             initial_width=image_width,
-                                                                             initial_height=image_height,
-                                                                             target_width=host_screen_width,
-                                                                             target_height=host_screen_height)
-
-                    self.click_at(x=play_x_scaled, y=play_y_scaled)
-                    logger.debug(f"Play button clicked (coordinates: {play_x_scaled} {play_y_scaled})")
+                    self.click_at(x=play_btn_center_x, y=play_btn_center_y)
+                    logger.debug(f"Play button clicked (coordinates: {play_btn_center_x} {play_btn_center_y})")
 
                     time.sleep(2)
                     games_played += 1
