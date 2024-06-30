@@ -185,16 +185,18 @@ class BlumAIClicker:
         Returns:
         (target_x, target_y): Coordinates in the target resolution.
         """
-        # TODO !! DEBUG, REMOVE BEFORE PROD !!
-        scaling_factor = 1.25  # 125% scaling
+        # Test 2: scale initial resolution
 
-        # Calculate effective target dimensions considering the scaling factor
-        effective_target_width = target_width / scaling_factor
-        effective_target_height = target_height / scaling_factor
+        # TODO !! DEBUG, REMOVE BEFORE PROD !!
+        scaling_factor = 1.25
+
+        # Adjust initial resolution by the scaling factor
+        adjusted_initial_width = initial_width * scaling_factor
+        adjusted_initial_height = initial_height * scaling_factor
 
         # Calculate scaling factors
-        scale_x = effective_target_width / initial_width
-        scale_y = effective_target_height / initial_height
+        scale_x = target_width / adjusted_initial_width
+        scale_y = target_height / adjusted_initial_height
 
         # Apply scaling to coordinates
         target_x = x * scale_x
