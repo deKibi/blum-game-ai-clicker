@@ -44,17 +44,18 @@ class BlumAIClicker:
         logger.info(f"Games goal for this session is set to {games_to_play} games.")
         logger.info("Please, open Blum home page and focus on it. Starting AI clicker in 5 seconds...")
         sleep(5)
+        logger.debug("Started playing Blum games.")
 
         while True:
             # Step #1.1: Start game window capture
             ss = window_capture.get_screenshot()
 
-            # Step #1.2: Quick game if needed
+            # Step Emergency stop
             if keyboard.is_pressed('q'):
                 logger.warning("You manually exited the game by pressing q!")
                 break
 
-            # Step #1.3: Get all detected objects with their coordinates
+            # Step #1.2: Get all detected objects with their coordinates
             coordinates = improc.proccess_image(ss)
 
             # Step #2.1: Get play button
@@ -64,18 +65,21 @@ class BlumAIClicker:
                 play_btn = play_buttons[0]
                 play_btn_x = play_btn['x']
                 play_btn_y = play_btn['y']
-                btn_w = play_btn['w']
-                btn_h = play_btn['h']
+                play_btn_w = play_btn['w']
+                play_btn_h = play_btn['h']
 
                 # Step #2: Locate x, y for btn
-                btn_center_coordinates = self._find_object_center(x=play_btn_x, y=play_btn_y, width=btn_w, height=btn_h)
-                btn_center_x = btn_center_coordinates['x']
-                btn_center_y = btn_center_coordinates['y']
+                play_btn_center_coordinates = self._find_object_center(x=play_btn_x, y=play_btn_y, width=play_btn_w,
+                                                                       height=play_btn_h)
+                play_btn_center_x = play_btn_center_coordinates['x']
+                play_btn_center_y = play_btn_center_coordinates['y']
 
                 # Step #3: Press play btn and increase played games counter
                 if games_played < games_to_play:
-                    self.click_at(x=btn_center_x, y=btn_center_y)
                     logger.info(f"Starting new game... {games_played}/{games_to_play}")
+
+                    self.click_at(x=play_btn_center_x, y=play_btn_center_y)
+                    logger.debug("Play button clicked.")
 
                     time.sleep(2)
                     games_played += 1
@@ -141,7 +145,7 @@ class BlumAIClicker:
                 if not too_close_to_bomb:
                     self.click_at(scaled_x, scaled_y)
 
-        logger.success('Finished playing Blum games.')
+        logger.success(f'Finished playing Blum games. Played {games_to_play}/{games_played} games.')
 
     @staticmethod
     def _find_object_center(x: int, y: int, width: int, height: int) -> dict:
