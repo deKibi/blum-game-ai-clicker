@@ -70,11 +70,11 @@ class BlumAIClicker:
 
                 # Step #3: Press play btn and increase played games counter
                 if games_played < games_to_play:
-                    self.click_at(x=btn_center_x, y=btn_center_y)
                     logger.info(f"Starting new game... {games_played}/{games_to_play}")
 
-                    time.sleep(2)
+                    self.click_at(x=btn_center_x, y=btn_center_y)
                     games_played += 1
+                    time.sleep(2)
 
                     logger.info(f"New game started. {games_played}/{games_to_play}")
                 else:
