@@ -62,20 +62,21 @@ class BlumAIClicker:
                 play_btn = play_buttons[0]
                 play_btn_x = play_btn['x']
                 play_btn_y = play_btn['y']
-                btn_w = play_btn['w']
-                btn_h = play_btn['h']
+                play_btn_w = play_btn['w']
+                play_btn_h = play_btn['h']
 
                 # Step #2.1: Locate x, y for btn
-                btn_center_coordinates = self._find_object_center(x=play_btn_x, y=play_btn_y, width=btn_w, height=btn_h)
-                btn_center_x = btn_center_coordinates['x']
-                btn_center_y = btn_center_coordinates['y']
+                btn_center_coordinates = self._find_object_center(x=play_btn_x, y=play_btn_y, width=play_btn_w,
+                                                                  height=play_btn_h)
+                play_btn_center_x = btn_center_coordinates['x']
+                play_btn_center_y = btn_center_coordinates['y']
 
                 # Step #2.2: Press play btn and increase played games counter
                 if games_played < games_to_play:
                     logger.info(f"Starting new game... {games_played}/{games_to_play}")
 
-                    self.click_at(x=btn_center_x, y=btn_center_y)
-                    logger.debug("Play button clicked.")
+                    self.click_at(x=play_btn_center_x, y=play_btn_center_y)
+                    logger.debug(f"Play button clicked (coordinates: {play_btn_center_x} {play_btn_center_y})")
                     time.sleep(2)
 
                     games_played += 1
