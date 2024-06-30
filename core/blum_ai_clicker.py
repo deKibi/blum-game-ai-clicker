@@ -31,7 +31,6 @@ class BlumAIClicker:
         # Create necessary class objects
         window_capture = WindowCapture(telegram_window_name)
         image_size = window_capture.get_window_size()
-        image_width, image_height = image_size
         improc = ImageProcessor(image_size, YOLO_CONFIG_PATH, YOLO_WEIGHTS_PATH)
 
         host_screen_resolution = project_config.get_host_screen_resolution()
@@ -50,39 +49,33 @@ class BlumAIClicker:
             # Step #1.1: Start game window capture
             ss = window_capture.get_screenshot()
 
-            # Script emergency stop
+            # Step #1.2: Quick game if needed
             if keyboard.is_pressed('q'):
                 logger.warning("You manually exited the game by pressing q!")
                 break
 
-            # Step #1.2: Get coordinates for all objects that are current on the screen
+            # Step #1.3: Get all detected objects with their coordinates
             coordinates = improc.proccess_image(ss)
 
-            # Step #1.3: Filter play/play again buttons
+            # Step #2.1: Get play button
             play_buttons = [c for c in coordinates if c["class_name"] in ["play_btn", "play_again_btn"]]
-
-            # Step #2: Start a game
             if len(play_buttons) > 0:
                 # Step #1: Get play button coordinates and size
                 play_btn = play_buttons[0]
                 play_btn_x = play_btn['x']
                 play_btn_y = play_btn['y']
-                play_btn_w = play_btn['w']
-                play_btn_h = play_btn['h']
+                btn_w = play_btn['w']
+                btn_h = play_btn['h']
 
-                # Step #2.1: Locate x, y for btn
-                btn_center_coordinates = self._find_object_center(x=play_btn_x, y=play_btn_y, width=play_btn_w,
-                                                                  height=play_btn_h)
-                play_btn_center_x = btn_center_coordinates['x']
-                play_btn_center_y = btn_center_coordinates['y']
+                # Step #2: Locate x, y for btn
+                btn_center_coordinates = self._find_object_center(x=play_btn_x, y=play_btn_y, width=btn_w, height=btn_h)
+                btn_center_x = btn_center_coordinates['x']
+                btn_center_y = btn_center_coordinates['y']
 
-                # Step #2.2: Press play btn and increase played games counter
-                # temporary solution which will be buggy for a small number of games
+                # Step #3: Press play btn and increase played games counter
                 if games_played < games_to_play:
+                    self.click_at(x=btn_center_x, y=btn_center_y)
                     logger.info(f"Starting new game... {games_played}/{games_to_play}")
-
-                    self.click_at(x=play_btn_center_x, y=play_btn_center_y)
-                    logger.debug(f"Play button clicked (coordinates: {play_btn_center_x} {play_btn_center_y})")
 
                     time.sleep(2)
                     games_played += 1
@@ -91,11 +84,11 @@ class BlumAIClicker:
                 else:
                     break
 
-            # Step #3: Play the game
+            # Step #2.2: Filter in-game objects
             stars_and_freezes = [c for c in coordinates if c["class_name"] in ["star", "freeze"]]
             bombs = [c for c in coordinates if c["class_name"] == "bomb"]
 
-            # Step #3.1 Priority freeze
+            # Priority to "freeze"
             if any(c["class_name"] == "freeze" for c in stars_and_freezes):
                 detected_object = next(c for c in stars_and_freezes if c["class_name"] == "freeze")
             else:
@@ -114,6 +107,7 @@ class BlumAIClicker:
                 obj_center_y = obj_center_coordinates['y']
 
                 # Step #3: Scale coordinates to screen resolution
+                image_width, image_height = image_size
                 scaled_center_coordinates = self._convert_coordinates(x=obj_center_x, y=obj_center_y,
                                                                       initial_width=image_width,
                                                                       initial_height=image_height,
@@ -147,7 +141,7 @@ class BlumAIClicker:
                 if not too_close_to_bomb:
                     self.click_at(scaled_x, scaled_y)
 
-        logger.success(f"Finished playing Blum games. Played {games_played}/{games_to_play} games.")
+        logger.success('Finished playing Blum games.')
 
     @staticmethod
     def _find_object_center(x: int, y: int, width: int, height: int) -> dict:
