@@ -13,7 +13,7 @@ def main():
     blum_ai_clicker = BlumAIClicker()
 
     try:
-        # Step #1: Initialize project
+        # Step #1: Initialize a project
         project_initialization.init()
 
         # Step #2: Start the clicker

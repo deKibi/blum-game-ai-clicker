@@ -16,10 +16,10 @@ Script intended to help with large numbers of games, it is not effective to run 
 - Ability to run on different screen resolutions (screen resolution is specified in the config)
 
 ## System requirements
-- OS: Windows
-- CPU: 6+ cores with recommended minimum frequency 3 GHz
+- OS: Windows (tested on Windows 10)
+- CPU: 8+ cores with a recommended minimum frequency of 4 GHz (on weaker CPUs the script may not work correctly)
 - RAM: 8+ GB
-- GPU: at least 1 GB GPU memory (not tested on VMs yet)
+- GPU: at least 512 MB GPU memory recommended
 
 ## Installation
 Required:
