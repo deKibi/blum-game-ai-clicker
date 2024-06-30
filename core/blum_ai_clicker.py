@@ -75,24 +75,11 @@ class BlumAIClicker:
                     logger.info(f"Starting new game... {games_played}/{games_to_play}")
 
                     self.click_at(x=btn_center_x, y=btn_center_y)
+                    logger.debug("Play button clicked.")
                     time.sleep(2)
 
                     games_played += 1
                     logger.info(f"New game started. {games_played}/{games_to_play}")
-
-                    # Step #2.3 Scan capture for Blum's in-game objects
-                    # coordinates = improc.proccess_image(ss)
-                    # stars_and_freezes = [c for c in coordinates if c["class_name"] in ["star", "freeze"]]
-                    #
-                    # # Step #2.4: Check if the game is really started
-                    # if len(stars_and_freezes) > 0:
-                    #     games_played += 1
-                    #     logger.info(f"New game started. {games_played}/{games_to_play}")
-                    # else:
-                    #     logger.warning(
-                    #         "Failed to start new game, no stars or freeze detected on the screen, retrying..."
-                    #     )
-                    #     continue
                 else:
                     break
 
