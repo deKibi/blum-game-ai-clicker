@@ -31,7 +31,7 @@ Required:
 
 1. Clone the repository to your machine (git should be installed on your machine)
     ```shell
-    git clone https://github.com/dKibi/blum-game-ai-clicker.git
+    git clone https://github.com/deKibi/blum-game-ai-clicker.git
     ```
 
 2. Create a virtual environment and activate it (for Windows)
