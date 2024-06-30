@@ -31,7 +31,12 @@ class BlumAIClicker:
         # Create necessary class objects
         window_capture = WindowCapture(telegram_window_name)
         image_size = window_capture.get_window_size()
+        image_width, image_height = image_size
         improc = ImageProcessor(image_size, YOLO_CONFIG_PATH, YOLO_WEIGHTS_PATH)
+
+        host_screen_resolution = project_config.get_host_screen_resolution()
+        host_screen_width = host_screen_resolution.get_width()
+        host_screen_height = host_screen_resolution.get_height()
 
         # Set target games count
         games_to_play = console_utils.ask_how_much_games_to_play()
@@ -75,8 +80,14 @@ class BlumAIClicker:
                 if games_played < games_to_play:
                     logger.info(f"Starting new game... {games_played}/{games_to_play}")
 
-                    self.click_at(x=play_btn_center_x, y=play_btn_center_y)
-                    logger.debug(f"Play button clicked (coordinates: {play_btn_center_x} {play_btn_center_y})")
+                    play_x_scaled, play_y_scaled = self._convert_coordinates(x=play_btn_center_x, y=play_btn_center_y,
+                                                                             initial_width=image_width,
+                                                                             initial_height=image_height,
+                                                                             target_width=host_screen_width,
+                                                                             target_height=host_screen_height)
+
+                    self.click_at(x=play_x_scaled, y=play_y_scaled)
+                    logger.debug(f"Play button clicked (coordinates: {play_x_scaled} {play_y_scaled})")
                     time.sleep(2)
 
                     games_played += 1
@@ -107,10 +118,6 @@ class BlumAIClicker:
                 obj_center_y = obj_center_coordinates['y']
 
                 # Step #3: Scale coordinates to screen resolution
-                image_width, image_height = image_size
-                host_screen_resolution = project_config.get_host_screen_resolution()
-                host_screen_width = host_screen_resolution.get_width()
-                host_screen_height = host_screen_resolution.get_height()
                 scaled_center_coordinates = self._convert_coordinates(x=obj_center_x, y=obj_center_y,
                                                                       initial_width=image_width,
                                                                       initial_height=image_height,
