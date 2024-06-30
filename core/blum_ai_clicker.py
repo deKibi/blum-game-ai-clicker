@@ -45,16 +45,18 @@ class BlumAIClicker:
             # Step #1.1: Start game window capture
             ss = window_capture.get_screenshot()
 
-            # Step #1.2: Quick game if needed
+            # Script emergency stop
             if keyboard.is_pressed('q'):
                 logger.warning("You manually exited the game by pressing q!")
                 break
 
-            # Step #1.3: Get all detected objects with their coordinates
+            # Step #1.2: Get coordinates for all objects that are current on the screen
             coordinates = improc.proccess_image(ss)
 
-            # Step #2.1: Get play button
+            # Step #1.3: Filter play/play again buttons
             play_buttons = [c for c in coordinates if c["class_name"] in ["play_btn", "play_again_btn"]]
+
+            # Step #2: Start a game
             if len(play_buttons) > 0:
                 # Step #1: Get play button coordinates and size
                 play_btn = play_buttons[0]
@@ -63,28 +65,42 @@ class BlumAIClicker:
                 btn_w = play_btn['w']
                 btn_h = play_btn['h']
 
-                # Step #2: Locate x, y for btn
+                # Step #2.1: Locate x, y for btn
                 btn_center_coordinates = self._find_object_center(x=play_btn_x, y=play_btn_y, width=btn_w, height=btn_h)
                 btn_center_x = btn_center_coordinates['x']
                 btn_center_y = btn_center_coordinates['y']
 
-                # Step #3: Press play btn and increase played games counter
+                # Step #2.2: Press play btn and increase played games counter
                 if games_played < games_to_play:
                     logger.info(f"Starting new game... {games_played}/{games_to_play}")
 
                     self.click_at(x=btn_center_x, y=btn_center_y)
-                    games_played += 1
                     time.sleep(2)
 
+                    games_played += 1
                     logger.info(f"New game started. {games_played}/{games_to_play}")
+
+                    # Step #2.3 Scan capture for Blum's in-game objects
+                    # coordinates = improc.proccess_image(ss)
+                    # stars_and_freezes = [c for c in coordinates if c["class_name"] in ["star", "freeze"]]
+                    #
+                    # # Step #2.4: Check if the game is really started
+                    # if len(stars_and_freezes) > 0:
+                    #     games_played += 1
+                    #     logger.info(f"New game started. {games_played}/{games_to_play}")
+                    # else:
+                    #     logger.warning(
+                    #         "Failed to start new game, no stars or freeze detected on the screen, retrying..."
+                    #     )
+                    #     continue
                 else:
                     break
 
-            # Step #2.2: Filter in-game objects
+            # Step #3: Play the game
             stars_and_freezes = [c for c in coordinates if c["class_name"] in ["star", "freeze"]]
             bombs = [c for c in coordinates if c["class_name"] == "bomb"]
 
-            # Priority to "freeze"
+            # Step #3.1 Priority freeze
             if any(c["class_name"] == "freeze" for c in stars_and_freezes):
                 detected_object = next(c for c in stars_and_freezes if c["class_name"] == "freeze")
             else:
