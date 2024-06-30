@@ -88,9 +88,10 @@ class BlumAIClicker:
 
                     self.click_at(x=play_x_scaled, y=play_y_scaled)
                     logger.debug(f"Play button clicked (coordinates: {play_x_scaled} {play_y_scaled})")
-                    time.sleep(2)
 
+                    time.sleep(2)
                     games_played += 1
+
                     logger.info(f"New game started. {games_played}/{games_to_play}")
                 else:
                     break
