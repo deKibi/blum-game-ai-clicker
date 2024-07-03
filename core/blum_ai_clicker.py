@@ -145,7 +145,7 @@ class BlumAIClicker:
                 if not too_close_to_bomb:
                     self.click_at(scaled_x, scaled_y)
 
-        logger.success(f'Finished playing Blum games. Played {games_to_play}/{games_played} games.')
+        logger.success(f'Finished playing Blum games. Played {games_played}/{games_to_play} games.')
 
     @staticmethod
     def _find_object_center(x: int, y: int, width: int, height: int) -> dict:
