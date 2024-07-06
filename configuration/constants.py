@@ -13,6 +13,5 @@ CONFIG_TEMPLATE_PATH = f"{FILE_TEMPLATES_DIR_PATH}/config_template.yaml"
 
 # AI
 YOLO_CONFIG_PATH = "./yolov4-tiny/yolov4-tiny-custom.cfg"
-YOLO_WEIGHTS_PATH = "core/yolov4-tiny-custom_last.weights"
-
-
+# Default: core/yolov4-tiny-custom_last.weights
+YOLO_WEIGHTS_PATH = "core/weights/event1/yolov4-tiny-custom_last.weights"
