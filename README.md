@@ -1,4 +1,4 @@
-# Blum Game AI Clicker
+# Blum Game AI Clicker - event update
 
 ![blum-event-screen-small](https://github.com/deKibi/blum-game-ai-clicker/assets/112882532/801d452b-ad0b-42f9-b516-141d9afa06dc)
 
