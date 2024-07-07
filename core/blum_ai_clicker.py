@@ -22,7 +22,8 @@ mouse = Controller()
 class BlumAIClicker:
     def start(self) -> None:
         logger.info(
-            f"Starting Blum AI clicker, v{PROJECT_VERSION}, developed by CRYPTO C0D3R (TG https://t.me/cryptocodi)"
+            f"Starting Blum AI clicker, v{PROJECT_VERSION}, developed by Daily Flips (https://t.me/arbyzeru) & "
+            f"CRYPTO C0D3R (https://t.me/cryptocodi)"
         )
 
         project_config = ProjectConfig()

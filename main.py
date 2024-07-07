@@ -27,7 +27,7 @@ def main():
     else:
         logger.success(
             "Blum AI clicker finished without any critical errors. Thanks for using soft developed "
-            "by CRYPTO C0D3R (TG https://t.me/cryptocodi)"
+            "by Daily Flips (https://t.me/arbyzeru) & CRYPTO C0D3R (https://t.me/cryptocodi)"
         )
 
 
