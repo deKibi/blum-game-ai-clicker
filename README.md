@@ -1,6 +1,6 @@
 # Blum Game AI Clicker - event update
 
-![blum-event-screen-small](https://github.com/deKibi/blum-game-ai-clicker/assets/112882532/801d452b-ad0b-42f9-b516-141d9afa06dc)
+![Blum AI clicker - bg small - git repo](https://github.com/deKibi/blum-game-ai-clicker/assets/112882532/7e89d50b-3670-460e-b537-24c4824ddfd6)
 
 ### https://t.me/arbyzeru
 ### https://t.me/cryptocodi/12
