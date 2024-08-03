@@ -185,6 +185,23 @@ class BlumAIClicker:
                 return True
         return False
 
+    def _is_in_non_clickable_area(self, x: int, y: int, screen_width: int, screen_height: int) -> bool:
+        # test vars
+        padding_left = 200
+        padding_right = 200
+
+        padding_top = 50
+        padding_bottom = 50
+
+        """Check if the given coordinates are within the non-clickable padding area."""
+        is_x_non_clickable_area = bool(x < padding_left or x > screen_width - padding_right)
+        is_y_non_clickable_area = bool(y < padding_top or y > screen_height - padding_bottom)
+
+        if is_x_non_clickable_area or is_y_non_clickable_area:
+            return True
+        else:
+            return False
+
     @staticmethod
     def _find_object_center(x: int, y: int, width: int, height: int) -> dict:
         center_x = x + width / 2
