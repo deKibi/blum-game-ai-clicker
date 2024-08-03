@@ -1,8 +1,8 @@
 # core/blum_ai_clicker.py
 
 # Standard Libraries
+from typing import List, Tuple, Dict
 import time
-from typing import Tuple
 from math import sqrt
 from time import sleep
 
@@ -22,6 +22,10 @@ mouse = Controller()
 
 
 class BlumAIClicker:
+    def __init__(self):
+        # Define non-clickable areas as a list of rectangles (x, y, width, height)
+        self._non_clickable_areas: List[Dict[str, int]] = []
+
     def start(self) -> None:
         logger.info(
             f"Starting Blum AI clicker, v{PROJECT_VERSION}, developed by Daily Flips (https://t.me/arbyzeru) & "
@@ -149,6 +153,26 @@ class BlumAIClicker:
                     self.click_at(scaled_x, scaled_y)
 
         logger.success(f'Finished playing Blum games. Played {games_played}/{games_to_play} games.')
+
+    def add_non_clickable_area(self, x: int, y: int, width: int, height: int) -> None:
+        """Add a non-clickable area to the list."""
+
+        non_clickable_area = {
+            'x': x,
+            'y': y,
+            'width': width,
+            'height': height
+        }
+
+        self._non_clickable_areas.append(non_clickable_area)
+
+    def is_in_non_clickable_area(self, x: int, y: int) -> bool:
+        """Check if the given coordinates are within any non-clickable area."""
+
+        for area in self._non_clickable_areas:
+            if area['x'] <= x <= area['x'] + area['width'] and area['y'] <= y <= area['y'] + area['height']:
+                return True
+        return False
 
     @staticmethod
     def _find_object_center(x: int, y: int, width: int, height: int) -> dict:
