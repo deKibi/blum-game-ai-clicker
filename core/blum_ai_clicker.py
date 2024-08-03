@@ -13,19 +13,16 @@ import keyboard
 
 # Custom Modules
 from configuration.project_config import ProjectConfig
-from configuration.constants import PROJECT_VERSION, YOLO_CONFIG_PATH, YOLO_WEIGHTS_PATH
 from core.window_capture import WindowCapture
 from core.image_processor import ImageProcessor
+from core.objects import NonClickableArea
 from utils import console_utils
+from configuration.constants import PROJECT_VERSION, YOLO_CONFIG_PATH, YOLO_WEIGHTS_PATH
 
 mouse = Controller()
 
 
 class BlumAIClicker:
-    def __init__(self):
-        # Define non-clickable areas as a list of rectangles (x, y, width, height)
-        self._non_clickable_areas: List[Dict[str, int]] = []
-
     def start(self) -> None:
         logger.info(
             f"Starting Blum AI clicker, v{PROJECT_VERSION}, developed by Daily Flips (https://t.me/arbyzeru) & "
@@ -34,16 +31,14 @@ class BlumAIClicker:
 
         # STEP #0: SET CLICKER SETTINGS
         project_config = ProjectConfig()
-        telegram_window_name = project_config.get_telegram_window_name()
+        # HOST SETTINGS
         host_screen_resolution = project_config.get_host_screen_resolution()
         host_screen_width = host_screen_resolution.get_width()
         host_screen_height = host_screen_resolution.get_height()
-
-        # Add the toolbar as a non-clickable area (adjust the values based on your screen resolution)
-        toolbar_height = 40  # Example height of the Windows toolbar
-        screen_width = host_screen_width
-        screen_height = host_screen_height
-        self._add_non_clickable_area(0, screen_height - toolbar_height, screen_width, toolbar_height)
+        # BLUM-RELATED SETTINGS
+        telegram_window_name = project_config.get_telegram_window_name()
+        stars_from_bomb = project_config.get_stars_from_bomb()
+        non_clickable_area = project_config.get_non_clickable_area()
 
         # Set target games count
         games_to_play = console_utils.ask_how_much_games_to_play()
@@ -141,62 +136,46 @@ class BlumAIClicker:
 
                     distance_to_bomb = self.distance(obj_center_coordinates, bomb_center_coordinates)
                     object_size = max(obj_width, obj_height)
+
                     # How far away the bomb should be (counting in object sizes)
-                    objects_multiplier_correction = project_config.get_stars_from_bomb()
-                    object_size_with_correction = object_size * objects_multiplier_correction
+                    object_size_with_correction = object_size * stars_from_bomb
 
                     if distance_to_bomb < object_size_with_correction:
                         too_close_to_bomb = True
                         logger.debug(
                             f"Too close to bomb! Distance to bomb: {distance_to_bomb}, "
                             f"object size: {object_size} ({obj_width}, {obj_height}), "
-                            f"correction coefficient: {objects_multiplier_correction}, "
+                            f"correction coefficient: {stars_from_bomb}, "
                             f"object size with correction: {object_size_with_correction}"
                         )
                         break
 
-                # CHECK IF OBJECT IN NON-CLICKABLE AREA
-                if not self._is_in_non_clickable_area(scaled_x, scaled_y):
-                    # CHECK IF OBJECT NOT TOO CLOSE TO BOMB
+                # CHECK IF OBJECT IN NON-CLICKABLE AREA & NOT TOO CLOSE TO BOMB
+                if not self._is_in_non_clickable_area(x=scaled_x, y=scaled_y, non_clickable_area=non_clickable_area,
+                                                      screen_width=host_screen_width, screen_height=host_screen_height):
                     if not too_close_to_bomb:
                         self.click_at(scaled_x, scaled_y)
                 else:
-                    logger.debug(f"Skipped click at ({scaled_x}, {scaled_y}) - within non-clickable area.")
+                    logger.debug(f'Skipped click at ({scaled_x}, {scaled_y}) - within non-clickable area.')
 
         logger.success(f'Finished playing Blum games. Played {games_played}/{games_to_play} games.')
 
-    def _add_non_clickable_area(self, x: int, y: int, width: int, height: int) -> None:
-        """Add a non-clickable area to the list."""
-
-        non_clickable_area = {
-            'x': x,
-            'y': y,
-            'width': width,
-            'height': height
-        }
-
-        self._non_clickable_areas.append(non_clickable_area)
-
-    def _is_in_non_clickable_area(self, x: int, y: int) -> bool:
-        """Check if the given coordinates are within any non-clickable area."""
-
-        for area in self._non_clickable_areas:
-            if area['x'] <= x <= area['x'] + area['width'] and area['y'] <= y <= area['y'] + area['height']:
-                return True
-        return False
-
-    def _is_in_non_clickable_area(self, x: int, y: int, screen_width: int, screen_height: int) -> bool:
-        # test vars
-        padding_left = 200
-        padding_right = 200
-
-        padding_top = 50
-        padding_bottom = 50
-
+    @staticmethod
+    def _is_in_non_clickable_area(x: int, y: int, non_clickable_area: NonClickableArea,
+                                  screen_width: int, screen_height: int) -> bool:
         """Check if the given coordinates are within the non-clickable padding area."""
+
+        # STEP #0: GET NON-CLICKABLE AREAS
+        padding_left = non_clickable_area.get_padding_left()
+        padding_right = non_clickable_area.get_padding_right()
+        padding_top = non_clickable_area.get_padding_top()
+        padding_bottom = non_clickable_area.get_padding_bottom()
+
+        # STEP #1: CHECK COORDINATES FOR EACH AXIS
         is_x_non_clickable_area = bool(x < padding_left or x > screen_width - padding_right)
         is_y_non_clickable_area = bool(y < padding_top or y > screen_height - padding_bottom)
 
+        # STEP #2: CHECK IF THE OBJECT'S COORDINATES ARE IN THE CLICKABLE AREA
         if is_x_non_clickable_area or is_y_non_clickable_area:
             return True
         else:

@@ -21,6 +21,6 @@ def init():
 
     # Step #3: Load project config
     project_config = ProjectConfig()
-    project_config.load_config()
+    project_config.load_config_data()
 
     logger.success("Project initialization finished.")

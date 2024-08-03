@@ -15,12 +15,6 @@ BLUM_SETTINGS:
   # This ensures the AI clicker targets the correct window for object detection (stars, bombs, freeze).
   TELEGRAM_WINDOW_NAME: "Blum"
 
-  NON_CLICKABLE_AREA:
-    PADDING_LEFT: 200px
-    PADDING_RIGHT: 200px
-    PADDING_TOP: 50px
-    PADDING_BOTTOM: 50px
-
   # The clicker includes a system to avoid clicking on a bomb if it is too close to a star.
   # Due to the delay between object appearance and detection, a bomb might occasionally be clicked by mistake.
   # To mitigate this, a coefficient is used to extend the safe distance between bombs and stars.
@@ -28,3 +22,9 @@ BLUM_SETTINGS:
   # For example, a value of 1.5 means a star will not be clicked if a bomb is closer than 1.5 star widths.
   # Recommended value: 1.5-2. Adjust according to your system's performance and in-game results.
   STARS_FROM_BOMB: 1.5
+
+  NON_CLICKABLE_AREA:
+    PADDING_LEFT: 200px
+    PADDING_RIGHT: 200px
+    PADDING_TOP: 50px
+    PADDING_BOTTOM: 50px

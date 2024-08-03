@@ -4,3 +4,7 @@ class ConfigLoadError(Exception):
 
 class ConfigValueError(Exception):
     pass
+
+
+class ConfigKeyError(Exception):
+    pass
