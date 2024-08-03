@@ -33,7 +33,6 @@ def main():
         )
     else:
         logger.success('Blum AI clicker finished without any critical errors.')
-
     finally:
         logger.success(
             '\n============================================\n'

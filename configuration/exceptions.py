@@ -1,8 +1,4 @@
-class InitialConfigLoadError(Exception):
-    pass
-
-
-class OutdatedConfigError(Exception):
+class ConfigTemplateError(Exception):
     pass
 
 

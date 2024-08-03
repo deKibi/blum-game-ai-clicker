@@ -1,4 +1,4 @@
-CONFIG_VERSION: "0.1.0"  # DO NOT CHANGE
+CONFIG_VERSION: "0.1.1"  # DO NOT CHANGE
 
 # Pixels can be entered in format number-only or number + suffix "px", for example - 2560px or 2560 or 2560 px
 

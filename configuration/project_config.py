@@ -11,12 +11,12 @@ from core.objects import ScreenResolution, NonClickableArea
 from utils import file_utils
 from configuration.constants import CONFIG_TEMPLATE_PATH, CONFIG_PATH
 from configuration.exceptions import (
-    InitialConfigLoadError, OutdatedConfigError, ConfigLoadError, ConfigKeyError, ConfigValueError
+    ConfigTemplateError, ConfigLoadError, ConfigKeyError, ConfigValueError
 )
 
 
 class ProjectConfig:
-    _CONFIG_VERSION: str = '0.1.0'
+    _CONFIG_VERSION: str = '0.1.1'
 
     def __init__(self):
         self._config_data: Optional[dict] = None
@@ -46,22 +46,41 @@ class ProjectConfig:
         logger.success('Project configuration loaded.')
 
     def _check_config_version(self) -> None:
+        # STEP #0: GET REQUIRED CONFIG VERSION USING VERSION IN TEMPLATE
+        template_config_data = file_utils.load_yaml(file_path=CONFIG_TEMPLATE_PATH)
+        required_config_version = template_config_data.get('CONFIG_VERSION')
+        if required_config_version is None:
+            raise ConfigTemplateError(
+                f'Could not fetch required config version from config template at {CONFIG_TEMPLATE_PATH}, '
+                f'please contact the developer, unintended behaviour!'
+            )
+
+        # STEP #1: GET CLIENT CONFIG VERSION
         client_config_version = self._config_data.get('CONFIG_VERSION')
 
+        # STEP #2: CHECK IF THE CLIENT CONFIG VERSION UP TO DATE
         if client_config_version is None:
-            raise OutdatedConfigError(
-                f'You have outdated config version! '
+            logger.debug('Client config version is None.')
+            logger.warning(f'You have outdated config version!')
+            logger.warning(
                 f'Please regenerate your config by deleting file at "{CONFIG_PATH}" and start the script again, '
-                f'it will generate up to date config file. Please note that you will loose your current settings!'
+                f'it will generate up to date config file.'
             )
+            logger.warning('Note that you will loose your current settings!')
+            sys.exit(0)
 
         if client_config_version != self._CONFIG_VERSION:
-            raise OutdatedConfigError(
+            logger.warning(
                 f'You have outdated config version! Required config version is "{self._CONFIG_VERSION}", '
-                f'you config version is "{client_config_version}". '
-                f'Please regenerate your config by deleting file at "{CONFIG_PATH}" and start the script again, '
-                f'it will generate up to date config file. Please note that you will loose your current settings!'
+                f'you config version is "{client_config_version}".'
+
             )
+            logger.warning(
+                f'Please regenerate your config by deleting file at "{CONFIG_PATH}" and start the script again, '
+                f'it will generate up to date config file. '
+            )
+            logger.warning('Note that you will loose your current settings and have to enter them again manually!')
+            sys.exit(0)
         else:
             logger.debug(
                 f'Your config version is up to date with project version, no actions needed '
