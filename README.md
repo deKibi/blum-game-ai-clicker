@@ -2,12 +2,15 @@
 
 ![Blum AI clicker - bg small - git repo](https://github.com/deKibi/blum-game-ai-clicker/assets/112882532/7e89d50b-3670-460e-b537-24c4824ddfd6)
 
-### https://t.me/arbyzeru
-### https://t.me/cryptocodi/12
+### Telegram https://t.me/arbyzeru
 
 Clicker to auto-collect stars in game and farm $BLUM automatically. Blum AI clicker works on object detection (stars, bombs, freeze), it means that there is no any interaction with Blum code or API itself.
 
 Script intended to help with large numbers of games, it is not effective to run it for 2–3 games, that's why I advise you to accumulate 50+ tickets and then run the script.
+
+### Buy me a coffee
+- MetaMask (any evm) `0x79002fD8bA43a5BFd26CD237BaC0a3677fcA9e55`
+- Phantom (Solana) `Fskayrpu1BQhPz333F6Q8WfQL3Kt2kWEv4U5y82gm5Hh`
 
 ## Features
 - Works on AI (computer vision) — interacting only with image, there is no interaction with the BLUM code/API
@@ -55,9 +58,7 @@ Required:
 11. Wait a few seconds, and you will be prompted to enter how many games should be played. Be careful and do not enter more games than your account have, there is no system to detect that you are out of tickets.
 12. Now Blum AI clicker will play as many games as you entered and then will be stopped. If you need to stop the script during the game, hold down the English key **q** for a few seconds.
 
-## Donate
-- MetaMask (any evm) `0x79002fD8bA43a5BFd26CD237BaC0a3677fcA9e55`
-- Phantom (Solana) `Fskayrpu1BQhPz333F6Q8WfQL3Kt2kWEv4U5y82gm5Hh`
+
 
 ## Credits
 - Thanks [@moises-dias](https://github.com/moises-dias) for Yolo object detection tutorial
