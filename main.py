@@ -1,22 +1,25 @@
-# Third-party Libraries
+# main.py
+
+# Standard Libraries
 import sys
 
+# Third-party Libraries
 from loguru import logger
 
 # Custom Modules
 from configuration import project_initialization
 from core.blum_ai_clicker import BlumAIClicker
 
+# Step #0: Initialize the project
+project_initialization.init()
 
+# Step #1: Create necessary class instances
+blum_ai_clicker = BlumAIClicker()
+
+
+# Step #2: Main Entry Point
 def main():
-    # Create necessary class instances
-    blum_ai_clicker = BlumAIClicker()
-
     try:
-        # Step #1: Initialize a project
-        project_initialization.init()
-
-        # Step #2: Start the clicker
         blum_ai_clicker.start()
     except KeyboardInterrupt:
         logger.error("Failed: script interrupted by user (CTRL + C)")

@@ -1,3 +1,5 @@
+# core/blum_ai_clicker.py
+
 # Standard Libraries
 import time
 from typing import Tuple
@@ -174,6 +176,7 @@ class BlumAIClicker:
         Returns:
         (target_x, target_y): Coordinates in the target resolution.
         """
+
         # Calculate scaling factors
         scale_x = target_width / initial_width
         scale_y = target_height / initial_height
@@ -187,12 +190,14 @@ class BlumAIClicker:
     @staticmethod
     def distance(coord1: dict, coord2: dict) -> float:
         """Calculate the Euclidean distance between two coordinates."""
+
         distance = sqrt((coord1['x'] - coord2['x']) ** 2 + (coord1['y'] - coord2['y']) ** 2)
         return distance
 
     @staticmethod
     def click_at(x: int, y: int) -> None:
         """Move the mouse to the specified coordinates and click."""
+
         mouse.position = (x, y)
         mouse.press(Button.left)
         # sleep(0.05)

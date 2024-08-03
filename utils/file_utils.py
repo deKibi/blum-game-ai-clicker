@@ -14,6 +14,7 @@ def create_directory_if_not_exist(directory_path: str) -> None:
 
     :param directory_path: The path to the directory.
     """
+
     if not os.path.exists(directory_path):
         os.makedirs(directory_path)
         logger.debug(f"Directory '{directory_path}' has been created.")
@@ -31,6 +32,7 @@ def copy_file(source_path: str, destination_path: str) -> None:
     :param source_path: The path to the source file.
     :param destination_path: The path to the destination file.
     """
+
     try:
         shutil.copy2(source_path, destination_path)
     except FileNotFoundError:
@@ -45,6 +47,7 @@ def load_yaml(file_path: str) -> Optional[dict]:
     :param file_path: The path to the YAML file.
     :return: The contents of the YAML file or None if file was not found/an error occurred.
     """
+
     try:
         with open(file_path, 'r') as file:
             content = yaml.safe_load(file)
@@ -65,6 +68,7 @@ def scan_folder_for_files(directory_path: str, extension: str) -> List[str]:
     :param extension: The extension of the files to search for in the directory.
     :return: List of matching files by extension.
     """
+
     # List all files in the log directory
     all_files = os.listdir(directory_path)
 
