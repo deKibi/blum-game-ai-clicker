@@ -7,8 +7,8 @@ HOST_SETTINGS:
   # Specify your screen resolution to ensure precise coordinate conversion from the Telegram window to your screen.
   # Example for a 2k monitor (resolution 2560x1440) - WIDTH: 2560px, HEIGHT: 1440px
   HOST_SCREEN_RESOLUTION:
-    WIDTH: 2560px
-    HEIGHT: 1440px
+    WIDTH: "2560px"
+    HEIGHT: "1440px"
 
 # IN-GAME SETTINGS
 BLUM_SETTINGS:
@@ -30,7 +30,7 @@ BLUM_SETTINGS:
   # This is useful to prevent the AI clicker from clicking on system UI elements like the toolbar or edges of the screen.
   # Each value represents the padding in pixels.
   NON_CLICKABLE_AREA:
-    PADDING_LEFT: 200px
-    PADDING_RIGHT: 200px
-    PADDING_TOP: 50px
-    PADDING_BOTTOM: 50px
+    PADDING_LEFT: "200px"
+    PADDING_RIGHT: "200px"
+    PADDING_TOP: "50px"
+    PADDING_BOTTOM: "50px"

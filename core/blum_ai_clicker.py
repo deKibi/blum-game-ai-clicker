@@ -27,10 +27,7 @@ class BlumAIClicker:
         self._project_config = ProjectConfig()
 
     def start(self) -> None:
-        logger.info(
-            f"Starting Blum AI clicker, v{PROJECT_VERSION}, developed by Daily Flips (https://t.me/arbyzeru) & "
-            f"CRYPTO C0D3R (https://t.me/cryptocodi)"
-        )
+        logger.info(f'Starting Blum AI clicker "v{PROJECT_VERSION}" developed by https://t.me/arbyzeru')
 
         # STEP #0: LOAD PROJECT CONFIG
         self._project_config.load()

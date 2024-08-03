@@ -166,8 +166,8 @@ class ProjectConfig:
             pixels_int = int(pixels_part)
 
             return pixels_int
-        except Exception:
+        except Exception as e:
             raise ConfigValueError(
-                f'Error converting pixels to an integer! Check that you used valid pixels format in the config, '
-                f'for example: 100px or 100 px or 100'
+                f'Error converting pixels to an integer! {e} '
+                f'Check that you used valid pixels format in the config, for example: "100px" or "100 px" or "100"'
             )

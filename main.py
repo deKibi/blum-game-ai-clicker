@@ -26,11 +26,23 @@ def main():
     except KeyboardInterrupt:
         logger.error('Failed: script interrupted by user (CTRL + C)')
     except Exception as e:
-        logger.exception(f'Failed due to unexpected error: {e}', e)
+        logger.exception(f'Failed due to an error: {e}', e)
+        logger.info(
+            'Check error message above for steps to fix it. If there is no steps or you do not know what to do, '
+            'contact developer via Telegram chat https://t.me/+TQTPjBRaHR83Njcy'
+        )
     else:
+        logger.success('Blum AI clicker finished without any critical errors.')
+
+    finally:
         logger.success(
-            'Blum AI clicker finished without any critical errors. Thanks for using soft developed '
-            'by Daily Flips (https://t.me/arbyzeru) & CRYPTO C0D3R (https://t.me/cryptocodi)'
+            '\n============================================\n'
+            '       Script Execution Complete\n'
+            '   Developed by https://t.me/arbyzeru\n'
+            '      For any questions or help\n'
+            '    https://t.me/+TQTPjBRaHR83Njcy\n'
+            '   Thank you for using Blum AI Clicker!\n'
+            '============================================'
         )
 
 
