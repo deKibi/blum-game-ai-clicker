@@ -25,6 +25,13 @@ def create_file_from_template_if_not_exist(destination_file_path: str, file_temp
         copy_file(source_path=file_template_path, destination_path=destination_file_path)
 
 
+def check_if_file_exist(file_path: str) -> bool:
+    if os.path.exists(file_path):
+        return True
+    else:
+        return False
+
+
 def copy_file(source_path: str, destination_path: str) -> None:
     """
     Copy a file from the source path to the destination path.

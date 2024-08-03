@@ -1,36 +1,47 @@
 # main.py
 
-# Standard Libraries
-import sys
-
 # Third-party Libraries
 from loguru import logger
 
 # Custom Modules
-from configuration import project_initialization
+from configuration import LoggerManager
+from configuration import project_loader
 from core.blum_ai_clicker import BlumAIClicker
 
-# Step #0: Initialize the project
-project_initialization.init()
 
-# Step #1: Create necessary class instances
-blum_ai_clicker = BlumAIClicker()
+# STEP #0: SET UP CONSOLE & FILE LOGGERS
+logger_manager = LoggerManager()
+logger_manager.setup_console_logger(level='INFO')
+logger_manager.setup_file_logger(level='DEBUG')
+
+# STEP #1: LOAD PROJECT DIRECTORIES AND FILES
+project_loader.init_directories()
+project_loader.init_files()
 
 
-# Step #2: Main Entry Point
+# STEP #2: MAIN ENTRY POINT
 def main():
     try:
-        blum_ai_clicker.start()
+        BlumAIClicker().start()
     except KeyboardInterrupt:
-        logger.error("Failed: script interrupted by user (CTRL + C)")
-        sys.exit(1)
+        logger.error('Failed: script interrupted by user (CTRL + C)')
     except Exception as e:
-        logger.exception(f"Failed due to unexpected error: {e}", e)
-        sys.exit(1)
+        logger.exception(f'Failed due to an error: {e}', e)
+        logger.info(
+            'Check error message above for steps to fix it. If there is no steps or you do not know what to do, '
+            'contact developer via Telegram chat https://t.me/+TQTPjBRaHR83Njcy'
+        )
     else:
+        logger.success('Blum AI clicker finished without any critical errors.')
+    finally:
         logger.success(
-            "Blum AI clicker finished without any critical errors. Thanks for using soft developed "
-            "by Daily Flips (https://t.me/arbyzeru) & CRYPTO C0D3R (https://t.me/cryptocodi)"
+            '\n============================================\n'
+            '       Script Execution Complete\n'
+            '   Developed by https://t.me/arbyzeru\n'
+            '      For any questions or help\n'
+            '    https://t.me/+TQTPjBRaHR83Njcy\n'
+            '   Thank you for using Blum AI Clicker!\n'
+            '============================================'
         )
 
 

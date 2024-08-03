@@ -1,6 +1,8 @@
 # Standard Libraries
-from datetime import datetime
+from typing import Literal
+import sys
 import os
+from datetime import datetime
 
 # Third-party Libraries
 from loguru import logger
@@ -10,25 +12,25 @@ from configuration.constants import LOGS_DIR_PATH
 from utils import file_utils
 
 
-class ProjectLogger:
-    _LOGS_LEVEL = "DEBUG"
+class LoggerManager:
+    @staticmethod
+    def setup_console_logger(level: Literal['DEBUG', 'INFO', 'WARNING']) -> None:
+        logger.remove()  # reset current logger
+        logger.add(sys.stderr, level=level)  # create new logger & set log level
 
-    def setup_console_logger(self) -> None:
-        logger.level(self._LOGS_LEVEL)
-
-    def setup_file_logger(self) -> None:
+    def setup_file_logger(self, level: Literal['DEBUG', 'INFO', 'WARNING']) -> None:
         available_log_file_path = self._get_available_log_file_path()
         file_logger_format = '[{time:DD-MM-YYYY HH:mm:ss}] [{name}:{function}/{level}]: {message}'
 
         logger.add(
             sink=available_log_file_path,
-            level=self._LOGS_LEVEL,
+            level=level,
             backtrace=True,
             format=file_logger_format
         )
 
     def _get_available_log_file_path(self) -> str:
-        # Step #1: Create folder with today's date inside log dir
+        # Step #1: Create a folder with today's date inside the log dir
         today_date_str = datetime.now().strftime('%Y-%m-%d')
         today_date_dir_path = f'{LOGS_DIR_PATH}/{today_date_str}'
         os.makedirs(today_date_dir_path, exist_ok=True)
@@ -42,7 +44,7 @@ class ProjectLogger:
         else:
             available_log_number = 1
 
-        available_log_file_path = f"{today_date_dir_path}/{today_date_str}-{available_log_number}.log"
+        available_log_file_path = f'{today_date_dir_path}/{today_date_str}-{available_log_number}.log'
         return available_log_file_path
 
     @staticmethod
