@@ -1,5 +1,5 @@
 # configuration/project_config.py
-
+import sys
 # Standard Libraries
 from typing import Optional, Any, List
 
@@ -29,10 +29,11 @@ class ProjectConfig:
         if not configfile_exist:
             file_utils.copy_file(source_path=CONFIG_TEMPLATE_PATH, destination_path=CONFIG_PATH)
             logger.debug(f'No config file was found at "{CONFIG_PATH}", initial file created.')
-            raise InitialConfigLoadError(
+            logger.warning(
                 f'Initial config file created. User setup required: '
                 f'please go to "{CONFIG_PATH}" and configure file according to your system and needs.'
             )
+            sys.exit(0)
 
         # STEP #2: LOAD THE CONFIG IF IT ALREADY EXISTS
         logger.debug(f'Config file at "{CONFIG_PATH}" already exist, loading it.')
