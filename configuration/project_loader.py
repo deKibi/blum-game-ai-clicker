@@ -15,4 +15,5 @@ def init_directories() -> None:
 
 
 def init_files() -> None:
-    logger.success('Project files initialized (no files needed to be initialized).')
+    logger.debug('No files need to be initialized.')
+    logger.success('Project files initialized.')

@@ -45,13 +45,14 @@ class BlumAIClicker:
         non_clickable_area = self._project_config.get_non_clickable_area()
 
         # Set target games count
+        time.sleep(0.1)  # delay to avoid loguru and Python input() conflict
         games_to_play = console_utils.ask_how_much_games_to_play()
         games_played = 0
 
-        logger.info(f"Games goal for this session is set to {games_to_play} games.")
-        logger.info("Please, open Blum home page and focus on it. Starting AI clicker in 5 seconds...")
+        logger.info(f'Games goal for this session is set to {games_to_play} games.')
+        logger.info('Please, open Blum home page and focus on it. Starting AI clicker in 5 seconds...')
         sleep(5)
-        logger.debug("Started playing Blum games.")
+        logger.debug('Started playing Blum games.')
 
         # STEP #1: CREATE NECESSARY CLASS OBJECTS TO CAPTURE SCREEN
         window_capture = WindowCapture(telegram_window_name)

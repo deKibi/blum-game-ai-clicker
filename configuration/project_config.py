@@ -10,11 +10,16 @@ from loguru import logger
 from core.objects import ScreenResolution, NonClickableArea
 from utils import file_utils
 from configuration.constants import CONFIG_TEMPLATE_PATH, CONFIG_PATH
-from configuration.exceptions import ConfigLoadError, ConfigKeyError, ConfigValueError, InitialConfigLoadError
+from configuration.exceptions import (
+    InitialConfigLoadError, OutdatedConfigError, ConfigLoadError, ConfigKeyError, ConfigValueError
+)
 
 
 class ProjectConfig:
-    _CONFIG_DATA: Optional[dict] = None
+    _CONFIG_VERSION: str = '0.1.0'
+
+    def __init__(self):
+        self._config_data: Optional[dict] = None
 
     def load(self) -> None:
         # STEP #0: CHECK IF CONFIG FILE EXISTS
@@ -32,15 +37,41 @@ class ProjectConfig:
         # STEP #2: LOAD THE CONFIG IF IT ALREADY EXISTS
         logger.debug(f'Config file at "{CONFIG_PATH}" already exist, loading it.')
         loaded_config_data = self._load_yaml_data()
-        self._CONFIG_DATA = loaded_config_data
+        self._config_data = loaded_config_data
+
+        # STEP #3: CHECK IF THE CURRENT VERSION OF THE CONFIG UP TO DATE
+        self._check_config_version()
+
         logger.success('Project configuration loaded.')
+
+    def _check_config_version(self) -> None:
+        client_config_version = self._config_data.get('CONFIG_VERSION')
+
+        if client_config_version is None:
+            raise OutdatedConfigError(
+                f'You have outdated config version! '
+                f'Please regenerate your config by deleting file at "{CONFIG_PATH}" and start the script again, '
+                f'it will generate up to date config file. Please note that you will loose your current settings!'
+            )
+
+        if client_config_version != self._CONFIG_VERSION:
+            raise OutdatedConfigError(
+                f'You have outdated config version! Required config version is "{self._CONFIG_VERSION}", '
+                f'you config version is "{client_config_version}". '
+                f'Please regenerate your config by deleting file at "{CONFIG_PATH}" and start the script again, '
+                f'it will generate up to date config file. Please note that you will loose your current settings!'
+            )
+        else:
+            logger.debug(
+                f'Your config version is up to date with project version, no actions needed '
+                f'(required config version "{self._CONFIG_VERSION}", client config version "{client_config_version}")'
+            )
 
     def get_host_screen_resolution(self) -> ScreenResolution:
         # STEP #0: GET HOST SCREEN RESOLUTION VALUES FROM PROJECT CONFIG
-        # screen_width_str: str = self._CONFIG_DATA['HOST_SETTINGS']['HOST_SCREEN_RESOLUTION']['WIDTH']
-        screen_width_str: str = self._get_key(key_path=['HOST_SETTINGS', 'HOST_SCREEN_RESOLUTION', 'WIDTH'])
-        # screen_height_str: str = self._CONFIG_DATA['HOST_SETTINGS']['HOST_SCREEN_RESOLUTION']['HEIGHT']
-        screen_height_str: str = self._get_key(key_path=['HOST_SETTINGS', 'HOST_SCREEN_RESOLUTION', 'HEIGHT'])
+        base_path = ['HOST_SETTINGS', 'HOST_SCREEN_RESOLUTION']
+        screen_width_str: str = self._get_key(key_path=base_path + ['WIDTH'])
+        screen_height_str: str = self._get_key(key_path=base_path + ['HEIGHT'])
 
         # STEP #1: CONVERT VALUES TO INTEGER
         screen_width_int: int = self._convert_px_to_int(pixels_str=screen_width_str)
@@ -51,19 +82,20 @@ class ProjectConfig:
         return host_screen_resolution
 
     def get_telegram_window_name(self) -> str:
-        window_name: str = self._CONFIG_DATA['BLUM_SETTINGS']['TELEGRAM_WINDOW_NAME']
+        window_name: str = self._get_key(key_path=['BLUM_SETTINGS', 'TELEGRAM_WINDOW_NAME'])
         return window_name
 
     def get_stars_from_bomb(self) -> float:
-        stars_from_bomb: float = self._CONFIG_DATA['BLUM_SETTINGS']['STARS_FROM_BOMB']
+        stars_from_bomb: float = self._get_key(key_path=['BLUM_SETTINGS', 'STARS_FROM_BOMB'])
         return stars_from_bomb
 
     def get_non_clickable_area(self) -> NonClickableArea:
         # STEP #0: GET NON CLICKABLE AREA VALUES FROM PROJECT CONFIG
-        left_padding_str: str = self._CONFIG_DATA['BLUM_SETTINGS']['NON_CLICKABLE_AREA']['PADDING_LEFT']
-        right_padding_str: str = self._CONFIG_DATA['BLUM_SETTINGS']['NON_CLICKABLE_AREA']['PADDING_RIGHT']
-        top_padding_str: str = self._CONFIG_DATA['BLUM_SETTINGS']['NON_CLICKABLE_AREA']['PADDING_TOP']
-        bottom_padding_str: str = self._CONFIG_DATA['BLUM_SETTINGS']['NON_CLICKABLE_AREA']['PADDING_BOTTOM']
+        base_path = ['BLUM_SETTINGS', 'NON_CLICKABLE_AREA']
+        left_padding_str: str = self._get_key(key_path=base_path + ['PADDING_LEFT'])
+        right_padding_str: str = self._get_key(key_path=base_path + ['PADDING_RIGHT'])
+        top_padding_str: str = self._get_key(key_path=base_path + ['PADDING_TOP'])
+        bottom_padding_str: str = self._get_key(key_path=base_path + ['PADDING_BOTTOM'])
 
         # STEP #1: CONVERT VALUES TO AN INTEGER
         left_padding_int: int = self._convert_px_to_int(pixels_str=left_padding_str)
@@ -77,7 +109,7 @@ class ProjectConfig:
         return non_clickable_area
 
     def _get_key(self, key_path: List[str]) -> Any:
-        if self._CONFIG_DATA is None:
+        if self._config_data is None:
             raise ConfigLoadError(
                 'Unable to get key from config - config data did not load. '
                 'Please load the config first before accessing key values.'
@@ -87,7 +119,7 @@ class ProjectConfig:
             raise ConfigKeyError('Path to the key cannot be None.')
 
         try:
-            current_level = self._CONFIG_DATA
+            current_level = self._config_data
 
             for key in key_path:
                 if current_level is None or key not in current_level:
@@ -104,7 +136,6 @@ class ProjectConfig:
                     f'Value for key "{key_path}" is None. '
                     'Please ensure the key exists and contains a valid value.'
                 )
-
         except KeyError as e:
             raise ConfigKeyError(
                 f'Key error while accessing path "{key_path}": {e}. '

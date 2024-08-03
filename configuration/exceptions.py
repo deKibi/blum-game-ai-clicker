@@ -2,6 +2,10 @@ class InitialConfigLoadError(Exception):
     pass
 
 
+class OutdatedConfigError(Exception):
+    pass
+
+
 class ConfigLoadError(Exception):
     pass
 

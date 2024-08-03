@@ -1,8 +1,5 @@
 # main.py
 
-# Standard Libraries
-import sys
-
 # Third-party Libraries
 from loguru import logger
 
@@ -27,13 +24,13 @@ def main():
     try:
         BlumAIClicker().start()
     except KeyboardInterrupt:
-        logger.error("Failed: script interrupted by user (CTRL + C)")
+        logger.error('Failed: script interrupted by user (CTRL + C)')
     except Exception as e:
-        logger.exception(f"Failed due to unexpected error: {e}", e)
+        logger.exception(f'Failed due to unexpected error: {e}', e)
     else:
         logger.success(
-            "Blum AI clicker finished without any critical errors. Thanks for using soft developed "
-            "by Daily Flips (https://t.me/arbyzeru) & CRYPTO C0D3R (https://t.me/cryptocodi)"
+            'Blum AI clicker finished without any critical errors. Thanks for using soft developed '
+            'by Daily Flips (https://t.me/arbyzeru) & CRYPTO C0D3R (https://t.me/cryptocodi)'
         )
 
 
