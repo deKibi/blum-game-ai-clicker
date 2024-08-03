@@ -32,17 +32,18 @@ class BlumAIClicker:
             f"CRYPTO C0D3R (https://t.me/cryptocodi)"
         )
 
+        # STEP #0: SET CLICKER SETTINGS
         project_config = ProjectConfig()
         telegram_window_name = project_config.get_telegram_window_name()
-
-        # Create necessary class objects
-        window_capture = WindowCapture(telegram_window_name)
-        image_size = window_capture.get_window_size()
-        improc = ImageProcessor(image_size, YOLO_CONFIG_PATH, YOLO_WEIGHTS_PATH)
-
         host_screen_resolution = project_config.get_host_screen_resolution()
         host_screen_width = host_screen_resolution.get_width()
         host_screen_height = host_screen_resolution.get_height()
+
+        # Add the toolbar as a non-clickable area (adjust the values based on your screen resolution)
+        toolbar_height = 40  # Example height of the Windows toolbar
+        screen_width = host_screen_width
+        screen_height = host_screen_height
+        self._add_non_clickable_area(0, screen_height - toolbar_height, screen_width, toolbar_height)
 
         # Set target games count
         games_to_play = console_utils.ask_how_much_games_to_play()
@@ -53,19 +54,24 @@ class BlumAIClicker:
         sleep(5)
         logger.debug("Started playing Blum games.")
 
+        # STEP #1: CREATE NECESSARY CLASS OBJECTS TO CAPTURE SCREEN
+        window_capture = WindowCapture(telegram_window_name)
+        image_size = window_capture.get_window_size()
+        improc = ImageProcessor(image_size, YOLO_CONFIG_PATH, YOLO_WEIGHTS_PATH)
+
         while True:
-            # Step #1.1: Start game window capture
+            # STEP #2: START CAPTURING GAME IMAGE
             ss = window_capture.get_screenshot()
 
-            # Step Emergency stop
+            # STEP #3: EMERGENCY STOP (IF NEEDED)
             if keyboard.is_pressed('q'):
                 logger.warning("You manually exited the game by pressing q!")
                 break
 
-            # Step #1.2: Get all detected objects with their coordinates
+            # STEP #4: FETCH ALL OBJECTS WITH THEIR COORDINATES FROM THE GAME IMAGE
             coordinates = improc.proccess_image(ss)
 
-            # Step #2.1: Get play button
+            # STEP #5: GET PLAY BUTTON (IF EXIST)
             play_buttons = [c for c in coordinates if c["class_name"] in ["play_btn", "play_again_btn"]]
             if len(play_buttons) > 0:
                 # Step #1: Get play button coordinates and size
@@ -95,16 +101,17 @@ class BlumAIClicker:
                 else:
                     break
 
-            # Step #2.2: Filter in-game objects
+            # STEP #6: FITER DETECTED OBJECTS
             stars_and_freezes = [c for c in coordinates if c["class_name"] in ["star", "freeze"]]
             bombs = [c for c in coordinates if c["class_name"] == "bomb"]
 
-            # Priority to "freeze"
+            # STEP #7: PRIORITIZE "FREEZE"
             if any(c["class_name"] == "freeze" for c in stars_and_freezes):
                 detected_object = next(c for c in stars_and_freezes if c["class_name"] == "freeze")
             else:
                 detected_object = stars_and_freezes[0] if stars_and_freezes else None
 
+            # STEP #8: GET STARS FROM DETECTED OBJECTS
             if detected_object:
                 # Step #1: Get coordinates and parameters of the detected object
                 obj_x = detected_object['x']
@@ -148,13 +155,17 @@ class BlumAIClicker:
                         )
                         break
 
-                # Click only if it's not too close to a bomb
-                if not too_close_to_bomb:
-                    self.click_at(scaled_x, scaled_y)
+                # CHECK IF OBJECT IN NON-CLICKABLE AREA
+                if not self._is_in_non_clickable_area(scaled_x, scaled_y):
+                    # CHECK IF OBJECT NOT TOO CLOSE TO BOMB
+                    if not too_close_to_bomb:
+                        self.click_at(scaled_x, scaled_y)
+                else:
+                    logger.debug(f"Skipped click at ({scaled_x}, {scaled_y}) - within non-clickable area.")
 
         logger.success(f'Finished playing Blum games. Played {games_played}/{games_to_play} games.')
 
-    def add_non_clickable_area(self, x: int, y: int, width: int, height: int) -> None:
+    def _add_non_clickable_area(self, x: int, y: int, width: int, height: int) -> None:
         """Add a non-clickable area to the list."""
 
         non_clickable_area = {
@@ -166,7 +177,7 @@ class BlumAIClicker:
 
         self._non_clickable_areas.append(non_clickable_area)
 
-    def is_in_non_clickable_area(self, x: int, y: int) -> bool:
+    def _is_in_non_clickable_area(self, x: int, y: int) -> bool:
         """Check if the given coordinates are within any non-clickable area."""
 
         for area in self._non_clickable_areas:
