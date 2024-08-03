@@ -1,7 +1,7 @@
 # configuration/project_config.py
 import sys
 # Standard Libraries
-from typing import Optional, Any, List
+from typing import Optional, Any, List, Union
 
 # Third-party Libraries
 from loguru import logger
@@ -16,8 +16,6 @@ from configuration.exceptions import (
 
 
 class ProjectConfig:
-    _CONFIG_VERSION: str = '0.1.1'
-
     def __init__(self):
         self._config_data: Optional[dict] = None
 
@@ -69,9 +67,9 @@ class ProjectConfig:
             logger.warning('Note that you will loose your current settings!')
             sys.exit(0)
 
-        if client_config_version != self._CONFIG_VERSION:
+        if client_config_version != required_config_version:
             logger.warning(
-                f'You have outdated config version! Required config version is "{self._CONFIG_VERSION}", '
+                f'You have outdated config version! Required config version is "{required_config_version}", '
                 f'you config version is "{client_config_version}".'
 
             )
@@ -84,7 +82,7 @@ class ProjectConfig:
         else:
             logger.debug(
                 f'Your config version is up to date with project version, no actions needed '
-                f'(required config version "{self._CONFIG_VERSION}", client config version "{client_config_version}")'
+                f'(required config version "{required_config_version}", client version "{client_config_version}")'
             )
 
     def get_host_screen_resolution(self) -> ScreenResolution:
@@ -94,8 +92,8 @@ class ProjectConfig:
         screen_height_str: str = self._get_key(key_path=base_path + ['HEIGHT'])
 
         # STEP #1: CONVERT VALUES TO INTEGER
-        screen_width_int: int = self._convert_px_to_int(pixels_str=screen_width_str)
-        screen_height_int: int = self._convert_px_to_int(pixels_str=screen_height_str)
+        screen_width_int: int = self._convert_px_to_int(pixels=screen_width_str)
+        screen_height_int: int = self._convert_px_to_int(pixels=screen_height_str)
 
         # STEP #2: CREATE HOST SCREEN RESOLUTION USING FETCHED VALUES FROM THE CONFIG
         host_screen_resolution = ScreenResolution(width=screen_width_int, height=screen_height_int)
@@ -118,10 +116,10 @@ class ProjectConfig:
         bottom_padding_str: str = self._get_key(key_path=base_path + ['PADDING_BOTTOM'])
 
         # STEP #1: CONVERT VALUES TO AN INTEGER
-        left_padding_int: int = self._convert_px_to_int(pixels_str=left_padding_str)
-        right_padding_int: int = self._convert_px_to_int(pixels_str=right_padding_str)
-        top_padding_int: int = self._convert_px_to_int(pixels_str=top_padding_str)
-        bottom_padding_int: int = self._convert_px_to_int(pixels_str=bottom_padding_str)
+        left_padding_int: int = self._convert_px_to_int(pixels=left_padding_str)
+        right_padding_int: int = self._convert_px_to_int(pixels=right_padding_str)
+        top_padding_int: int = self._convert_px_to_int(pixels=top_padding_str)
+        bottom_padding_int: int = self._convert_px_to_int(pixels=bottom_padding_str)
 
         # STEP #2: CREATE NON-CLICKABLE AREA USING FETCHED VALUES FROM THE CONFIG
         non_clickable_area = NonClickableArea(padding_left=left_padding_int, padding_right=right_padding_int,
@@ -177,9 +175,18 @@ class ProjectConfig:
             raise ConfigLoadError(f'Loaded empty config data from file at "{CONFIG_PATH}"')
 
     @staticmethod
-    def _convert_px_to_int(pixels_str: str) -> int:
+    def _convert_px_to_int(pixels: Union[int, str]) -> int:
+        if pixels is None:
+            raise ConfigValueError(
+                f'Error converting pixels to an integer! Received value is None.'
+                f'Check that you used valid pixels format in the config, for example: "100px" or "100 px" or "100"'
+            )
+
+        if isinstance(pixels, int):
+            return pixels
+
         try:
-            pixels_parts = pixels_str.split('px')
+            pixels_parts = pixels.split('px')
 
             pixels_part = pixels_parts[0].strip()
             pixels_int = int(pixels_part)
