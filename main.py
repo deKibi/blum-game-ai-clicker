@@ -7,26 +7,29 @@ import sys
 from loguru import logger
 
 # Custom Modules
-from configuration import project_initialization
+from configuration import LoggerManager
+from configuration import project_loader
 from core.blum_ai_clicker import BlumAIClicker
 
-# Step #0: Initialize the project
-project_initialization.init()
 
-# Step #1: Create necessary class instances
-blum_ai_clicker = BlumAIClicker()
+# STEP #0: SET UP CONSOLE & FILE LOGGERS
+logger_manager = LoggerManager()
+logger_manager.setup_console_logger(level='INFO')
+logger_manager.setup_file_logger(level='DEBUG')
+
+# STEP #1: LOAD PROJECT DIRECTORIES AND FILES
+project_loader.init_directories()
+project_loader.init_files()
 
 
-# Step #2: Main Entry Point
+# STEP #2: MAIN ENTRY POINT
 def main():
     try:
-        blum_ai_clicker.start()
+        BlumAIClicker().start()
     except KeyboardInterrupt:
         logger.error("Failed: script interrupted by user (CTRL + C)")
-        sys.exit(1)
     except Exception as e:
         logger.exception(f"Failed due to unexpected error: {e}", e)
-        sys.exit(1)
     else:
         logger.success(
             "Blum AI clicker finished without any critical errors. Thanks for using soft developed "

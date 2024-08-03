@@ -1,7 +1,7 @@
 # core/blum_ai_clicker.py
 
 # Standard Libraries
-from typing import List, Tuple, Dict
+from typing import Tuple
 import time
 from math import sqrt
 from time import sleep
@@ -23,22 +23,26 @@ mouse = Controller()
 
 
 class BlumAIClicker:
+    def __init__(self):
+        self._project_config = ProjectConfig()
+
     def start(self) -> None:
         logger.info(
             f"Starting Blum AI clicker, v{PROJECT_VERSION}, developed by Daily Flips (https://t.me/arbyzeru) & "
             f"CRYPTO C0D3R (https://t.me/cryptocodi)"
         )
 
-        # STEP #0: SET CLICKER SETTINGS
-        project_config = ProjectConfig()
+        # STEP #0: LOAD PROJECT CONFIG
+        self._project_config.load()
+
         # HOST SETTINGS
-        host_screen_resolution = project_config.get_host_screen_resolution()
+        host_screen_resolution = self._project_config.get_host_screen_resolution()
         host_screen_width = host_screen_resolution.get_width()
         host_screen_height = host_screen_resolution.get_height()
         # BLUM-RELATED SETTINGS
-        telegram_window_name = project_config.get_telegram_window_name()
-        stars_from_bomb = project_config.get_stars_from_bomb()
-        non_clickable_area = project_config.get_non_clickable_area()
+        telegram_window_name = self._project_config.get_telegram_window_name()
+        stars_from_bomb = self._project_config.get_stars_from_bomb()
+        non_clickable_area = self._project_config.get_non_clickable_area()
 
         # Set target games count
         games_to_play = console_utils.ask_how_much_games_to_play()

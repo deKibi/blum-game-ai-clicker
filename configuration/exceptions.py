@@ -1,3 +1,7 @@
+class InitialConfigLoadError(Exception):
+    pass
+
+
 class ConfigLoadError(Exception):
     pass
 

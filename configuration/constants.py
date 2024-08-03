@@ -1,12 +1,11 @@
 # configuration/constants.py
-
 # DO NOT CHANGE THIS FILE UNLESS YOU KNOW WHAT YOU ARE DOING
 
 PROJECT_VERSION = '0.5.2-beta'
 
 # PROJECT FOLDERS
 FILES_DIR_PATH = 'files'
-LOGS_DIR_PATH = 'logs'
+LOGS_DIR_PATH = 'files/logs'
 FILE_TEMPLATES_DIR_PATH = 'configuration/file_templates'
 
 # PROJECT FILES
