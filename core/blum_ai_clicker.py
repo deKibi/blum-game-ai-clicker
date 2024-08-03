@@ -107,17 +107,17 @@ class BlumAIClicker:
 
             # STEP #7: PRIORITIZE "FREEZE"
             if any(c["class_name"] == "freeze" for c in stars_and_freezes):
-                detected_object = next(c for c in stars_and_freezes if c["class_name"] == "freeze")
+                filtered_objects = next(c for c in stars_and_freezes if c["class_name"] == "freeze")
             else:
-                detected_object = stars_and_freezes[0] if stars_and_freezes else None
+                filtered_objects = stars_and_freezes[0] if stars_and_freezes else None
 
             # STEP #8: GET STARS FROM DETECTED OBJECTS
-            if detected_object:
+            if filtered_objects:
                 # Step #1: Get coordinates and parameters of the detected object
-                obj_x = detected_object['x']
-                obj_y = detected_object['y']
-                obj_width = detected_object['w']
-                obj_height = detected_object['h']
+                obj_x = filtered_objects['x']
+                obj_y = filtered_objects['y']
+                obj_width = filtered_objects['w']
+                obj_height = filtered_objects['h']
 
                 # Step #2: Get center coordinates of the detected object
                 obj_center_coordinates = self._find_object_center(x=obj_x, y=obj_y, width=obj_width, height=obj_height)
