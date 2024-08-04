@@ -41,7 +41,12 @@ class BlumAIClicker:
         stars_from_bomb = self._project_config.get_stars_from_bomb()
         non_clickable_area = self._project_config.get_non_clickable_area()
 
-        # Set target games count
+        # STEP #1: PREPARE WINDOW CAPTURE
+        window_capture = WindowCapture(telegram_window_name)
+        image_size = window_capture.get_window_size()
+        improc = ImageProcessor(image_size, YOLO_CONFIG_PATH, YOLO_WEIGHTS_PATH)
+
+        # STEP #2: SET GAMES GOAL
         time.sleep(0.1)  # delay to avoid loguru and Python input() conflict
         games_to_play = console_utils.ask_how_much_games_to_play()
         games_played = 0
@@ -51,24 +56,20 @@ class BlumAIClicker:
         sleep(5)
         logger.debug('Started playing Blum games.')
 
-        # STEP #1: CREATE NECESSARY CLASS OBJECTS TO CAPTURE SCREEN
-        window_capture = WindowCapture(telegram_window_name)
-        image_size = window_capture.get_window_size()
-        improc = ImageProcessor(image_size, YOLO_CONFIG_PATH, YOLO_WEIGHTS_PATH)
-
+        # STEP #3: START ANALYZING IMAGES AND PRESSING THE OBJECTS
         while True:
-            # STEP #2: START CAPTURING GAME IMAGE
+            # STEP #1: START CAPTURING GAME IMAGE
             ss = window_capture.get_screenshot()
 
-            # STEP #3: EMERGENCY STOP (IF NEEDED)
+            # STEP #2: EMERGENCY STOP (IF NEEDED)
             if keyboard.is_pressed('q'):
                 logger.warning("You manually exited the game by pressing q!")
                 break
 
-            # STEP #4: FETCH ALL OBJECTS WITH THEIR COORDINATES FROM THE GAME IMAGE
+            # STEP #3: FETCH ALL OBJECTS WITH THEIR COORDINATES FROM THE GAME IMAGE
             coordinates = improc.proccess_image(ss)
 
-            # STEP #5: GET PLAY BUTTON (IF EXIST)
+            # STEP #4: GET PLAY BUTTON (IF EXIST)
             play_buttons = [c for c in coordinates if c["class_name"] in ["play_btn", "play_again_btn"]]
             if len(play_buttons) > 0:
                 # Step #1: Get play button coordinates and size
