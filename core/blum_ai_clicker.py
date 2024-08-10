@@ -89,6 +89,7 @@ class BlumAIClicker:
                 if games_played < games_to_play:
                     logger.info(f"Starting new game... {games_played}/{games_to_play}")
 
+                    time.sleep(0.1)  # delay to let the interface for play again load and then click the button
                     self.click_at(x=play_btn_center_x, y=play_btn_center_y)
                     logger.debug("Play button clicked.")
 
@@ -234,5 +235,5 @@ class BlumAIClicker:
 
         mouse.position = (x, y)
         mouse.press(Button.left)
-        # sleep(0.05)
+        sleep(0.05)
         mouse.release(Button.left)
