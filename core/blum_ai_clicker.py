@@ -74,14 +74,10 @@ class BlumAIClicker:
             if len(play_buttons) > 0:
                 # Step #1: Get play button coordinates and size
                 play_btn = play_buttons[0]
-                play_btn_x = play_btn['x']
-                play_btn_y = play_btn['y']
-                play_btn_w = play_btn['w']
-                play_btn_h = play_btn['h']
+                play_btn_center_coordinates = self._find_object_center(play_btn['x'], play_btn['y'], play_btn['w'],
+                                                                       play_btn['h'])
 
                 # Step #2: Locate x, y for btn
-                play_btn_center_coordinates = self._find_object_center(x=play_btn_x, y=play_btn_y, width=play_btn_w,
-                                                                       height=play_btn_h)
                 play_btn_center_x = play_btn_center_coordinates['x']
                 play_btn_center_y = play_btn_center_coordinates['y']
 
