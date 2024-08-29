@@ -37,9 +37,9 @@ def main():
         logger.success(
             '\n============================================\n'
             '       Script Execution Complete\n'
-            '   Developed by https://t.me/arbyzeru\n'
+            '   Developed by https://t.me/cryptocodi\n'
             '      For any questions or help\n'
-            '    https://t.me/+TQTPjBRaHR83Njcy\n'
+            '    https://t.me/+9AaQjHhw0aE4Mzgy\n'
             '   Thank you for using Blum AI Clicker!\n'
             '============================================'
         )
