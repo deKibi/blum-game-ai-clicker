@@ -1,3 +1,4 @@
+# PROJECT CONFIGURATION
 class ConfigTemplateError(Exception):
     pass
 

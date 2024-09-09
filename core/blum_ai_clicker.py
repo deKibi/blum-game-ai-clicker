@@ -36,6 +36,7 @@ class BlumAIClicker:
         host_screen_resolution = self._project_config.get_host_screen_resolution()
         host_screen_width = host_screen_resolution.get_width()
         host_screen_height = host_screen_resolution.get_height()
+
         # BLUM-RELATED SETTINGS
         telegram_window_name = self._project_config.get_telegram_window_name()
         stars_from_bomb = self._project_config.get_stars_from_bomb()

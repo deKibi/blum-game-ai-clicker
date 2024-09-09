@@ -1,8 +1,10 @@
 # Standard Libraries
+import sys
 from time import sleep, time
 import os
 
 # Third-party Libraries
+from loguru import logger
 import numpy as np
 import win32gui, win32ui, win32con
 from PIL import Image
@@ -15,8 +17,14 @@ class WindowCapture:
 
     def __init__(self, window_name):
         self.hwnd = win32gui.FindWindow(None, window_name)
+
         if not self.hwnd:
-            raise Exception('Window not found: {}'.format(window_name))
+            logger.warning(
+                f'Window with the name "{window_name}" not found. '
+                f'Please make sure that there is Android emulator running with such name, otherwise just '
+                f'restart the script.'
+            )
+            sys.exit(1)
 
         window_rect = win32gui.GetWindowRect(self.hwnd)
         self.w = window_rect[2] - window_rect[0]
