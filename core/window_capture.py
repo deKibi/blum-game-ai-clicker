@@ -9,6 +9,9 @@ import numpy as np
 import win32gui, win32ui, win32con
 from PIL import Image
 
+# Custom Modules
+from configuration.constants import CONFIG_PATH
+
 
 class WindowCapture:
     w = 0
@@ -21,8 +24,8 @@ class WindowCapture:
         if not self.hwnd:
             logger.warning(
                 f'Window with the name "{window_name}" not found. '
-                f'Please make sure that there is Android emulator running with such name, otherwise just '
-                f'restart the script.'
+                f'Please make sure that there is Android emulator running with such name or '
+                f'change the name in your config.yaml ("{CONFIG_PATH}"), otherwise just restart the script.'
             )
             sys.exit(1)
 
