@@ -6,7 +6,8 @@
 
 ### DEMO https://youtu.be/8dvFX3-oGz0
 
-### You can buy $BLUM autofarm, free setup and no equipment & special knowledge needed. Details - t.me/cryptocodi/102
+### You can buy $BLUM autofarm
+- free setup and no equipment & special knowledge needed, details - [t.me/cryptocodi/102](https://t.me/cryptocodi/102?single)
 
 - UA guide - https://cryptocodi.com/
 - ENG guide - https://cryptocodi.com/en/blum-ai-soft/
