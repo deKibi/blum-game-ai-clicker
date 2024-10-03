@@ -2,7 +2,7 @@
 
 ![Blum AI clicker - bg small - git repo](https://github.com/deKibi/blum-game-ai-clicker/assets/112882532/7e89d50b-3670-460e-b537-24c4824ddfd6)
 
-### Author https://t.me/cryptocodi 
+### Author https://t.me/cryptocodi (UA & ENG) & https://t.me/arbyzeru (RU)
 
 ### DEMO https://youtu.be/8dvFX3-oGz0
 
