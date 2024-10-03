@@ -22,14 +22,15 @@ project_loader.init_files()
 # STEP #2: MAIN ENTRY POINT
 def main():
     try:
+        result = 10/0
         BlumAIClicker().start()
     except KeyboardInterrupt:
         logger.error('Failed: script interrupted by user (CTRL + C)')
     except Exception as e:
         logger.exception(f'Failed due to an error: {e}', e)
-        logger.info(
+        logger.warning(
             'Check error message above for steps to fix it. If there is no steps or you do not know what to do, '
-            'contact community support via Telegram chat https://t.me/+3z98nad38M40ZGE6'
+            'contact community support via Telegram chat https://t.me/+3z98nad38M40ZGE6 (UA & ENG) or https://t.me/+2eFPaAQqvmk2ODUy (RU)'
         )
     else:
         logger.success('Blum AI clicker finished without any critical errors.')
@@ -38,8 +39,9 @@ def main():
             '\n============================================\n'
             '       Script Execution Complete\n'
             '   Developed by https://t.me/cryptocodi\n'
+            '      & https://t.me/arbyzeru \n'
             ' Buy auto farm - https://t.me/cryptocodi/102\n'
-            '   Thank you for using Blum AI Clicker!\n'
+            '   Thank you for using Blum AI script!\n'
             '============================================'
         )
 
