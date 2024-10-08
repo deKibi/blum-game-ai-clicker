@@ -22,7 +22,6 @@ project_loader.init_files()
 # STEP #2: MAIN ENTRY POINT
 def main():
     try:
-        result = 10/0
         BlumAIClicker().start()
     except KeyboardInterrupt:
         logger.error('Failed: script interrupted by user (CTRL + C)')
