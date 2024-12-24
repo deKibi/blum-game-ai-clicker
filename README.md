@@ -2,11 +2,15 @@
 
 ![Blum AI clicker - bg small - git repo](https://github.com/deKibi/blum-game-ai-clicker/assets/112882532/7e89d50b-3670-460e-b537-24c4824ddfd6)
 
-## DEMO - https://youtu.be/8dvFX3-oGz0
+## DEMO — https://youtu.be/8dvFX3-oGz0
 
-## Author https://t.me/cryptocodi
+## Author — https://t.me/cryptocodi
+Subscribe to my Telegram channel, its free and also supports me match + you get useful info & educational content.
 
-Subscribe my Telegram channel, its free and also supports me match + you get useful info & educational content.
+## Guide (video, YouTube) — https://youtu.be/JVa_kwCsltc
+
+## Guide (text, my website) — https://cryptocodi.com/blum-soft/
+
 
 ## Features
 - Works on AI (computer vision) — interacting only with image, there is no interaction with the BLUM code/API
