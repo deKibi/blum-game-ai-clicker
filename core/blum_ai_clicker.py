@@ -40,7 +40,7 @@ class BlumAIClicker:
 
         # BLUM-RELATED SETTINGS
         telegram_window_name = self._project_config.get_telegram_window_name()
-        # stars_from_bomb = self._project_config.get_stars_from_bomb()
+        stars_from_bomb = self._project_config.get_stars_from_bomb()
         non_clickable_area = self._project_config.get_non_clickable_area()
 
         # STEP #1: PREPARE WINDOW CAPTURE
@@ -113,7 +113,7 @@ class BlumAIClicker:
 
                 # STEP #6: FITER DETECTED OBJECTS
                 stars_and_freezes = [c for c in coordinates if c["class_name"] in ["star", "freeze"]]
-                # bombs = [c for c in coordinates if c["class_name"] == "bomb"]
+                bombs = [c for c in coordinates if c["class_name"] == "bomb"]
 
                 # STEP #7: PRIORITIZE "FREEZE"
                 if any(c["class_name"] == "freeze" for c in stars_and_freezes):
@@ -144,26 +144,26 @@ class BlumAIClicker:
                     scaled_x, scaled_y = scaled_center_coordinates
 
                     # Check if the detected object is near a bomb
-                    # too_close_to_bomb = False
-                    # for bomb in bombs:
-                    #     bomb_center_coordinates = self._find_object_center(x=bomb['x'], y=bomb['y'], width=bomb['w'],
-                    #                                                        height=bomb['h'])
-                    #
-                    #     distance_to_bomb = self.distance(obj_center_coordinates, bomb_center_coordinates)
-                    #     object_size = max(obj_width, obj_height)
-                    #
-                    #     # How far away the bomb should be (counting in object sizes)
-                    #     object_size_with_correction = object_size * stars_from_bomb
-                    #
-                    #     if distance_to_bomb < object_size_with_correction:
-                    #         too_close_to_bomb = True
-                    #         logger.debug(
-                    #             f"Too close to bomb! Distance to bomb: {distance_to_bomb}, "
-                    #             f"object size: {object_size} ({obj_width}, {obj_height}), "
-                    #             f"correction coefficient: {stars_from_bomb}, "
-                    #             f"object size with correction: {object_size_with_correction}"
-                    #         )
-                    #         break
+                    too_close_to_bomb = False
+                    for bomb in bombs:
+                        bomb_center_coordinates = self._find_object_center(x=bomb['x'], y=bomb['y'], width=bomb['w'],
+                                                                           height=bomb['h'])
+
+                        distance_to_bomb = self.distance(obj_center_coordinates, bomb_center_coordinates)
+                        object_size = max(obj_width, obj_height)
+
+                        # How far away the bomb should be (counting in object sizes)
+                        object_size_with_correction = object_size * stars_from_bomb
+
+                        if distance_to_bomb < object_size_with_correction:
+                            too_close_to_bomb = True
+                            logger.debug(
+                                f"Too close to bomb! Distance to bomb: {distance_to_bomb}, "
+                                f"object size: {object_size} ({obj_width}, {obj_height}), "
+                                f"correction coefficient: {stars_from_bomb}, "
+                                f"object size with correction: {object_size_with_correction}"
+                            )
+                            break
 
                     # CHECK IF OBJECT IN NON-CLICKABLE AREA & NOT TOO CLOSE TO BOMB
                     if not self._is_in_non_clickable_area(
@@ -173,9 +173,10 @@ class BlumAIClicker:
                             screen_width=host_screen_width,
                             screen_height=host_screen_height
                     ):
-                        # if not too_close_to_bomb:
-                        #     self.click_at(scaled_x, scaled_y)
-                        self.click_at(scaled_x, scaled_y)
+                        if not too_close_to_bomb:
+                            self.click_at(scaled_x, scaled_y)
+                        else:
+                            logger.debug(f'Skipped click at ({scaled_x}, {scaled_y}) - too close to bomb.')
                     else:
                         logger.debug(f'Skipped click at ({scaled_x}, {scaled_y}) - within non-clickable area.')
 
