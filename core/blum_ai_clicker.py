@@ -40,7 +40,7 @@ class BlumAIClicker:
 
         # BLUM-RELATED SETTINGS
         telegram_window_name = self._project_config.get_telegram_window_name()
-        stars_from_bomb = self._project_config.get_stars_from_bomb()
+        # stars_from_bomb = self._project_config.get_stars_from_bomb()
         non_clickable_area = self._project_config.get_non_clickable_area()
 
         # STEP #1: PREPARE WINDOW CAPTURE
