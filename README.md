@@ -1,24 +1,16 @@
-# Blum Game AI Clicker - event update
+# Blum Game AI Clicker
 
 ![Blum AI clicker - bg small - git repo](https://github.com/deKibi/blum-game-ai-clicker/assets/112882532/7e89d50b-3670-460e-b537-24c4824ddfd6)
 
-### Author https://t.me/cryptocodi (UA & ENG) & https://t.me/arbyzeru (RU)
+## DEMO — https://youtu.be/8dvFX3-oGz0
 
-### DEMO https://youtu.be/8dvFX3-oGz0
+## Author — https://t.me/cryptocodi
+Subscribe to my Telegram channel, its free and also supports me match + you get useful info & educational content.
 
-### You can buy $BLUM autofarm
-- free setup and no equipment & special knowledge needed, details - [t.me/cryptocodi/102](https://t.me/cryptocodi/102?single)
+## Guide (video, YouTube) — https://youtu.be/JVa_kwCsltc
 
-- UA guide - https://cryptocodi.com/
-- ENG guide - https://cryptocodi.com/en/blum-ai-soft/
+## Guide (text, my website) — https://cryptocodi.com/blum-soft/
 
-Clicker to auto-collect stars in game and farm $BLUM automatically. Blum AI clicker works on object detection (stars, bombs, freeze), it means that there is no any interaction with Blum code or API itself.
-
-Script intended to help with large numbers of games, it is not effective to run it for 2–3 games, that's why I advise you to accumulate 50+ tickets and then run the script.
-
-### Buy me a coffee
-- MetaMask (any evm) `0x79002fD8bA43a5BFd26CD237BaC0a3677fcA9e55`
-- Phantom (Solana) `Fskayrpu1BQhPz333F6Q8WfQL3Kt2kWEv4U5y82gm5Hh`
 
 ## Features
 - Works on AI (computer vision) — interacting only with image, there is no interaction with the BLUM code/API
@@ -66,8 +58,6 @@ Required:
 11. Wait a few seconds, and you will be prompted to enter how many games should be played. Be careful and do not enter more games than your account have, there is no system to detect that you are out of tickets.
 12. Now Blum AI clicker will play as many games as you entered and then will be stopped. If you need to stop the script during the game, hold down the English key **q** for a few seconds.
 
-
-
 ## Credits
 - Thanks [@moises-dias](https://github.com/moises-dias) for Yolo object detection tutorial
 - Thanks [@hokageR1s](https://t.me/hokageR1s) for help with testing
@@ -75,3 +65,7 @@ Required:
 ## Disclaimer
 The script was written for educational purposes and has never been used on my accounts to earn money or violate rules.
 Use the software at your own risk.
+
+## DONATE (_any EVM_) - 0x79002fD8bA43a5BFd26CD237BaC0a3677fcA9e55
+## DONATE (_SOL_) - Fskayrpu1BQhPz333F6Q8WfQL3Kt2kWEv4U5y82gm5Hh
+## DONATE (_FREE_) - https://t.me/cryptocodi
