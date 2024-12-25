@@ -29,7 +29,7 @@ def main():
         logger.exception(f'Failed due to an error: {e}', e)
         logger.warning(
             'Check error message above for steps to fix it. If there is no steps or you do not know what to do, '
-            'contact community support via Telegram chat https://t.me/+3z98nad38M40ZGE6 (UA & ENG) or https://t.me/+2eFPaAQqvmk2ODUy (RU)'
+            'you can contact community support via Telegram chat https://t.me/+3z98nad38M40ZGE6'
         )
     else:
         logger.success('Blum AI clicker finished without any critical errors.')
@@ -38,8 +38,7 @@ def main():
             '\n============================================\n'
             '       Script Execution Complete\n'
             '   Developed by https://t.me/cryptocodi\n'
-            '      & https://t.me/arbyzeru \n'
-            ' Buy auto farm - https://t.me/cryptocodi/102\n'
+            ' Any questions - https://t.me/+3z98nad38M40ZGE6\n'
             '   Thank you for using Blum AI script!\n'
             '============================================'
         )
