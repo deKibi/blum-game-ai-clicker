@@ -3,7 +3,7 @@
 ![Blum AI clicker - bg small - git repo](https://github.com/deKibi/blum-game-ai-clicker/assets/112882532/7e89d50b-3670-460e-b537-24c4824ddfd6)
 
 ## DEMO — https://youtu.be/8dvFX3-oGz0
-## New Year DEMO (first Blum's update/second) - https://youtu.be/IJz5BKqCa8A / https://youtu.be/f3XAIVJszjs
+## New Year DEMO (first Blum's update/second) — https://youtu.be/IJz5BKqCa8A / https://youtu.be/f3XAIVJszjs
 
 ## Author — https://t.me/cryptocodi
 Subscribe to my Telegram channel, its free and also supports me match + you get useful info & educational content.
