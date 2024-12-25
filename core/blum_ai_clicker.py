@@ -56,7 +56,7 @@ class BlumAIClicker:
         logger.info(f'Games goal for this session is set to {games_to_play} games.')
         logger.info('Please, open Blum home page and focus on it. Starting AI clicker in 5 seconds...')
         sleep(5)
-        logger.debug('Started playing Blum games.')
+        logger.info('Started playing Blum games.')
 
         # STEP #3: START ANALYZING IMAGES AND PRESSING THE OBJECTS
         while True:
@@ -64,9 +64,13 @@ class BlumAIClicker:
                 logger.warning("You manually exited the game by pressing q!")
                 break
             elif keyboard.is_pressed("p"):
+                logger.warning("Script paused, to resume press r.")
                 self._paused = True
+                time.sleep(0.2)  # delay to avoid spam
             elif keyboard.is_pressed("r"):
+                logger.success("Script resumed.")
                 self._paused = False
+                time.sleep(0.2)  # delay to avoid spam
 
             if not self._paused:
                 # STEP #1: START CAPTURING GAME IMAGE
@@ -104,6 +108,7 @@ class BlumAIClicker:
 
                         logger.info(f"New game started. {games_played}/{games_to_play}")
                     else:
+                        logger.warning("Games goal played.")
                         break
 
                 # STEP #6: FITER DETECTED OBJECTS
