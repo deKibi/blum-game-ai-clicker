@@ -186,20 +186,6 @@ class BlumAIClicker:
         sleep(0.05)
         mouse.release(Button.left)
 
-    def _pause_resume_handler(self):
-        """Thread to handle pause and resume functionality."""
-        while True:
-            if keyboard.is_pressed('p'):
-                self._paused.clear()  # Pause the script
-                logger.info("Script paused. Press 'r' to resume.")
-                while not self._paused.is_set():
-                    if keyboard.is_pressed('r'):
-                        self._paused.set()  # Resume the script
-                        logger.info("Script resumed.")
-                        break
-                    time.sleep(0.1)
-            time.sleep(0.1)
-
     @staticmethod
     def _is_in_non_clickable_area(x: int, y: int, non_clickable_area: NonClickableArea,
                                   screen_width: int, screen_height: int) -> bool:
